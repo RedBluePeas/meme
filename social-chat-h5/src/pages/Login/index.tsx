@@ -6,11 +6,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@nextui-org/react';
 import { useAuth } from '@/hooks/useAuth';
+import { useAppDispatch } from '@/store';
+import { setMockAuth } from '@/store/slices/authSlice';
 import { SSValidateUtil } from '@/utils';
 import { SSDialog } from '@/components/SSDialog';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { login, loading } = useAuth();
 
   const [form, setForm] = useState({
@@ -60,8 +63,29 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    // TODO: Mock 跳转 - 开发阶段直接跳转到主页
-    // 等后端 API 开发完成后，取消注释下面的代码
+    // TODO: Mock 登录 - 开发阶段使用 Mock 数据
+    // 等后端 API 开发完成后，取消注释后面的正式登录逻辑
+
+    // Mock 用户数据
+    const mockUser = {
+      id: 'mock-user-id',
+      username: form.username.trim(),
+      nickname: form.username.trim(),
+      avatar: 'https://i.pravatar.cc/150?img=1',
+      email: `${form.username}@example.com`,
+      phone: '',
+      bio: '这是一个测试用户',
+      followersCount: 100,
+      followingCount: 50,
+      postsCount: 20,
+    };
+
+    // 设置 Mock 登录状态
+    dispatch(setMockAuth({
+      user: mockUser,
+      token: 'mock-token-' + Date.now(),
+    }));
+
     SSDialog.toast.success('登录成功');
     setTimeout(() => {
       navigate('/home');

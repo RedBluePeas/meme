@@ -114,6 +114,20 @@ const authSlice = createSlice({
       SSStorageUtil.remove('auth_token');
       SSStorageUtil.remove('user_info');
     },
+
+    /**
+     * 设置 Mock 登录状态（开发阶段使用）
+     */
+    setMockAuth: (state, action: PayloadAction<{ user: User; token: string }>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isAuthenticated = true;
+      state.error = null;
+
+      // 保存到本地存储
+      SSStorageUtil.set('auth_token', action.payload.token);
+      SSStorageUtil.set('user_info', action.payload.user);
+    },
   },
   extraReducers: (builder) => {
     // 登录
@@ -204,6 +218,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { updateUser, clearError, clearAuth } = authSlice.actions;
+export const { updateUser, clearError, clearAuth, setMockAuth } = authSlice.actions;
 
 export default authSlice.reducer;
