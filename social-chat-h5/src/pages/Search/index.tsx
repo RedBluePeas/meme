@@ -1,13 +1,16 @@
 /**
  * Search - 全局搜索页面
+ * 性能优化: 使用防抖 + LazyImage
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input, Tabs, Tab, Avatar, Card, CardBody } from '@nextui-org/react';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { MainLayout } from '@/components/Layout';
+import { LazyImage } from '@/components/LazyImage';
 import { useSearch } from '@/hooks/useSearch';
+import { useDebounce } from '@/hooks/usePerformance';
 import { SearchType } from '@/types/models';
 
 const SearchPage: React.FC = () => {
@@ -19,6 +22,19 @@ const SearchPage: React.FC = () => {
   useEffect(() => {
     loadHistory();
   }, []);
+
+  // 防抖搜索 - 300ms 后执行
+  const debouncedSearch = useDebounce(async (searchKeyword: string, searchType: SearchType) => {
+    if (!searchKeyword.trim()) return;
+    await search({ keyword: searchKeyword.trim(), type: searchType });
+  }, 300, []);
+
+  const handleKeywordChange = useCallback((value: string) => {
+    setKeyword(value);
+    if (value.trim()) {
+      debouncedSearch(value, type);
+    }
+  }, [type, debouncedSearch]);
 
   const handleSearch = async () => {
     if (!keyword.trim()) return;
@@ -38,7 +54,7 @@ const SearchPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <Input
               value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
+              onChange={(e) => handleKeywordChange(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               placeholder="搜索用户、内容、群组"
               startContent={<SearchIcon size={18} className="text-gray-400" />}
@@ -86,7 +102,13 @@ const SearchPage: React.FC = () => {
                   <Card key={user.id} onClick={() => navigate(`/users/${user.id}`)}>
                     <CardBody>
                       <div className="flex items-center gap-3">
-                        <Avatar src={user.avatar} size="lg" />
+                        <Avatar
+                          as="span"
+                          ImgComponent={LazyImage}
+                          src={user.avatar}
+                          name={user.nickname}
+                          size="lg"
+                        />
                         <div>
                           <h3 className="font-medium">{user.nickname}</h3>
                           <p className="text-sm text-gray-500">{user.username}</p>
@@ -112,7 +134,13 @@ const SearchPage: React.FC = () => {
                   <Card key={group.id} onClick={() => navigate(`/groups/${group.id}`)}>
                     <CardBody>
                       <div className="flex items-center gap-3">
-                        <Avatar src={group.avatar} size="lg" />
+                        <Avatar
+                          as="span"
+                          ImgComponent={LazyImage}
+                          src={group.avatar}
+                          name={group.name}
+                          size="lg"
+                        />
                         <div>
                           <h3 className="font-medium">{group.name}</h3>
                           <p className="text-sm text-gray-500">{group.memberCount} 人</p>

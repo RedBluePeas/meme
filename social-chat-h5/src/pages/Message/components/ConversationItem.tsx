@@ -1,11 +1,13 @@
 /**
  * ConversationItem - 会话列表项
  * 显示会话头像、名称、最后消息、未读数等信息
+ * 性能优化: 使用 LazyImage
  */
 
 import React from 'react';
 import { Avatar, Badge } from '@nextui-org/react';
 import { Pin, BellOff, Image as ImageIcon, Video, File } from 'lucide-react';
+import { LazyImage } from '@/components/LazyImage';
 import { Conversation } from '@/types/models';
 import { formatTime } from '@/utils/format';
 
@@ -71,8 +73,11 @@ export const ConversationItem: React.FC<ConversationItemProps> = ({
           placement="top-right"
         >
           <Avatar
+            as="span"
+            ImgComponent={LazyImage}
             src={conversation.avatar}
             alt={conversation.name}
+            name={conversation.name}
             size="lg"
             className="flex-shrink-0"
           />

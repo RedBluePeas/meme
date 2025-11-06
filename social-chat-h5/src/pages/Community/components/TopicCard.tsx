@@ -1,10 +1,12 @@
 /**
  * TopicCard - 话题卡片组件
+ * 性能优化: 使用 LazyImage
  */
 
 import React from 'react';
-import { Card, CardBody, CardFooter, Image, Button, Chip } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, Button, Chip } from '@nextui-org/react';
 import { Users, Eye } from 'lucide-react';
+import { LazyImage } from '@/components/LazyImage';
 import type { Topic } from '@/types';
 import { SSStringUtil } from '@/utils';
 
@@ -30,11 +32,11 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         {/* 封面图 */}
         {topic.cover && (
           <div className="relative w-full h-40">
-            <Image
+            <LazyImage
               src={topic.cover}
               alt={topic.name}
               className="w-full h-full object-cover"
-              radius="none"
+              showLoading
             />
             {/* 渐变遮罩 */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

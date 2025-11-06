@@ -1,10 +1,12 @@
 /**
  * FriendItem - 好友列表项
  * 显示好友头像、昵称、签名、在线状态
+ * 性能优化: 使用 LazyImage
  */
 
 import React from 'react';
 import { Avatar, Badge } from '@nextui-org/react';
+import { LazyImage } from '@/components/LazyImage';
 import { Friend } from '@/types/models';
 
 interface FriendItemProps {
@@ -31,8 +33,11 @@ export const FriendItem: React.FC<FriendItemProps> = ({ friend, onClick }) => {
           }}
         >
           <Avatar
+            as="span"
+            ImgComponent={LazyImage}
             src={friend.avatar}
             alt={friend.remark || friend.nickname}
+            name={friend.remark || friend.nickname}
             size="lg"
             className="flex-shrink-0"
           />
