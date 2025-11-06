@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import { Avatar, Button } from '@nextui-org/react';
-import { Edit, QrCode } from 'lucide-react';
+import { Avatar, Button } from '@heroui/react';
+import { PencilIcon, QrCodeIcon } from '@heroicons/react/24/outline';
 import { User } from '@/types/models';
 
 interface ProfileHeaderProps {
@@ -51,7 +51,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             className="text-white"
             onClick={onQRCode}
           >
-            <QrCode size={20} />
+            <QrCodeIcon className="w-5 h-5" />
           </Button>
           <Button
             isIconOnly
@@ -60,7 +60,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             className="text-white"
             onClick={onEdit}
           >
-            <Edit size={20} />
+            <PencilIcon className="w-5 h-5" />
           </Button>
         </div>
       </div>

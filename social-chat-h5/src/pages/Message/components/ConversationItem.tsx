@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import { Avatar, Badge } from '@nextui-org/react';
-import { Pin, BellOff, Image as ImageIcon, Video, File } from 'lucide-react';
+import { Avatar, Badge } from '@heroui/react';
+import { MapPinIcon, BellSlashIcon, PhotoIcon, VideoCameraIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { LazyImage } from '@/components/LazyImage';
 import { Conversation } from '@/types/models';
 import { formatTime } from '@/utils/format';
@@ -30,14 +30,14 @@ export const ConversationItem: React.FC<ConversationItemProps> = ({
       case 'image':
         return (
           <div className="flex items-center gap-1 text-gray-500">
-            <ImageIcon size={14} />
+            <PhotoIcon className="w-3.5 h-3.5" />
             <span>[图片]</span>
           </div>
         );
       case 'video':
         return (
           <div className="flex items-center gap-1 text-gray-500">
-            <Video size={14} />
+            <VideoCameraIcon className="w-3.5 h-3.5" />
             <span>[视频]</span>
           </div>
         );
@@ -50,7 +50,7 @@ export const ConversationItem: React.FC<ConversationItemProps> = ({
       case 'file':
         return (
           <div className="flex items-center gap-1 text-gray-500">
-            <File size={14} />
+            <DocumentIcon className="w-3.5 h-3.5" />
             <span>[文件]</span>
           </div>
         );
@@ -91,12 +91,12 @@ export const ConversationItem: React.FC<ConversationItemProps> = ({
           <div className="flex items-center gap-1">
             {/* 置顶图标 */}
             {conversation.isPinned && (
-              <Pin size={14} className="text-primary flex-shrink-0" />
+              <MapPinIcon className="w-3.5 h-3.5 text-primary flex-shrink-0" />
             )}
 
             {/* 免打扰图标 */}
             {conversation.isMuted && (
-              <BellOff size={14} className="text-gray-400 flex-shrink-0" />
+              <BellSlashIcon className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
             )}
 
             {/* 会话名称 */}

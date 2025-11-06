@@ -4,7 +4,7 @@
  */
 
 import React, { useRef, useEffect } from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 import { MessageBubble } from './MessageBubble';
 import { Message } from '@/types/models';
 import { useAppSelector } from '@/store';

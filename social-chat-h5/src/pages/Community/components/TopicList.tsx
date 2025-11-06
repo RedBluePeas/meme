@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 import type { Topic } from '@/types';
 import { TopicCard } from './TopicCard';
 import { Empty } from '@/components/common';

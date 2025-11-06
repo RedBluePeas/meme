@@ -5,8 +5,8 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardBody, Button } from '@nextui-org/react';
-import { Bell, Trash2 } from 'lucide-react';
+import { Card, CardBody, Button } from '@heroui/react';
+import { BellIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { VirtualList } from '@/components/VirtualList';
 import { useNotification } from '@/hooks/useNotification';
@@ -52,7 +52,7 @@ const NotificationListPage: React.FC = () => {
                 variant="light"
                 onClick={(e) => handleDelete(notification.id, e)}
               >
-                <Trash2 size={16} className="text-gray-400" />
+                <TrashIcon className="w-4 h-4 text-gray-400" />
               </Button>
             </div>
           </CardBody>
@@ -84,7 +84,7 @@ const NotificationListPage: React.FC = () => {
           onLoadMore={handleLoadMore}
           emptyContent={
             <div className="flex flex-col items-center justify-center text-gray-400">
-              <Bell size={48} className="mb-4 text-gray-300" />
+              <BellIcon className="w-12 h-12 mb-4 text-gray-300" />
               <p className="text-sm">暂无通知</p>
             </div>
           }

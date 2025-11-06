@@ -5,8 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Input, Textarea, Button, Avatar } from '@nextui-org/react';
-import { Camera } from 'lucide-react';
+import { Input, Textarea, Button, Avatar } from '@heroui/react';
+import { CameraIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { useAppSelector, useAppDispatch } from '@/store';
 import { updateUserInfo } from '@/store/slices/userSlice';
@@ -123,7 +123,7 @@ const EditProfilePage: React.FC = () => {
                 htmlFor="avatar-upload"
                 className="absolute bottom-0 right-0 w-6 h-6 bg-primary rounded-full flex items-center justify-center cursor-pointer"
               >
-                <Camera size={14} className="text-white" />
+                <CameraIcon className="w-3.5 h-3.5 text-white" />
               </label>
               <input
                 id="avatar-upload"

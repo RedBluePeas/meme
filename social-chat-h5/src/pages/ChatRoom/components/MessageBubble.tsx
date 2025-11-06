@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import { Avatar, Image } from '@nextui-org/react';
-import { Check, CheckCheck, Clock, XCircle } from 'lucide-react';
+import { Avatar, Image } from '@heroui/react';
+import { CheckIcon, ClockIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { Message } from '@/types/models';
 import { formatTime } from '@/utils/format';
 
@@ -28,15 +28,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
     switch (message.status) {
       case 'sending':
-        return <Clock size={14} className="text-gray-400" />;
+        return <ClockIcon className="w-3.5 h-3.5 text-gray-400" />;
       case 'sent':
-        return <Check size={14} className="text-gray-400" />;
+        return <CheckIcon className="w-3.5 h-3.5 text-gray-400" />;
       case 'delivered':
-        return <CheckCheck size={14} className="text-gray-400" />;
+        return <CheckIcon className="w-3.5 h-3.5 text-gray-400" />;
       case 'read':
-        return <CheckCheck size={14} className="text-blue-500" />;
+        return <CheckIcon className="w-3.5 h-3.5 text-blue-500" />;
       case 'failed':
-        return <XCircle size={14} className="text-red-500" />;
+        return <XCircleIcon className="w-3.5 h-3.5 text-red-500" />;
       default:
         return null;
     }

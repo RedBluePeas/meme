@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input } from '@heroui/react';
 import { useAuth } from '@/hooks/useAuth';
 import { SSValidateUtil } from '@/utils';
 import { SSDialog } from '@/components/SSDialog';

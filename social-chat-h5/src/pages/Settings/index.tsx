@@ -5,8 +5,8 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
-import { Trash2 } from 'lucide-react';
+import { Button } from '@heroui/react';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { SSDialog } from '@/components/SSDialog';
 import { SSStorageUtil } from '@/utils';

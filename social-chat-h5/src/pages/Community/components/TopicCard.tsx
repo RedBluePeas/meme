@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import { Card, CardBody, CardFooter, Button, Chip } from '@nextui-org/react';
-import { Users, Eye } from 'lucide-react';
+import { Card, CardBody, CardFooter, Button, Chip } from '@heroui/react';
+import { UsersIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { LazyImage } from '@/components/LazyImage';
 import type { Topic } from '@/types';
 import { SSStringUtil } from '@/utils';
@@ -71,11 +71,11 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           {/* 统计信息 */}
           <div className="flex items-center gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-1">
-              <Users size={16} />
+              <UsersIcon className="w-4 h-4" />
               <span>{SSStringUtil.formatNumber(topic.memberCount)} 参与</span>
             </div>
             <div className="flex items-center gap-1">
-              <Eye size={16} />
+              <EyeIcon className="w-4 h-4" />
               <span>{SSStringUtil.formatNumber(topic.viewCount)} 浏览</span>
             </div>
           </div>

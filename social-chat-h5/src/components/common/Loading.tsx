@@ -3,7 +3,7 @@
  * 用于页面或区块的加载状态显示
  */
 
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 
 /**
  * 加载组件属性

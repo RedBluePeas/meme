@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 import { FriendItem } from './FriendItem';
 import { Friend, FriendGroup } from '@/types/models';
 

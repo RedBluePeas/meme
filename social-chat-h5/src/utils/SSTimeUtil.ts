@@ -47,12 +47,12 @@ export class SSTimeUtil {
       return '刚刚';
     }
 
-    // X分钟前（1小时内）
+    // XMarkIcon分钟前（1小时内）
     if (diffSeconds < 3600) {
       return `${Math.floor(diffSeconds / 60)}分钟前`;
     }
 
-    // X小时前（24小时内）
+    // XMarkIcon小时前（24小时内）
     if (diffSeconds < 86400) {
       return `${Math.floor(diffSeconds / 3600)}小时前`;
     }

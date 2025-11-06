@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef, ReactNode } from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 
 /**
  * 无限滚动组件属性

@@ -5,8 +5,8 @@
  */
 
 import React, { useMemo } from 'react';
-import { Spinner } from '@nextui-org/react';
-import { MessageCircle } from 'lucide-react';
+import { Spinner } from '@heroui/react';
+import { MessageCircle } from '@heroicons/react/24/outline';
 import { ConversationItem } from './ConversationItem';
 import { VirtualList } from '@/components/VirtualList';
 import { Conversation } from '@/types/models';

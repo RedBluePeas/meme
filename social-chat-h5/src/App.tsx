@@ -4,7 +4,7 @@
 
 import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { NextUIProvider } from '@nextui-org/react';
+import { NextUIProvider } from '@heroui/react';
 import { Provider } from 'react-redux';
 import { router } from './router';
 import { store } from './store';

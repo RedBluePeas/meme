@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 
 interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   /** 图片 URL */

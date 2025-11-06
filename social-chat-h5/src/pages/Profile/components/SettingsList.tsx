@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 export interface SettingItem {
   id: string;
@@ -58,7 +58,7 @@ export const SettingsList: React.FC<SettingsListProps> = ({ items, title }) => {
                   {item.badge}
                 </span>
               )}
-              <ChevronRight size={18} className="text-gray-400" />
+              <ChevronRightIcon className="w-[18px] h-[18px] text-gray-400" />
             </div>
           </button>
         ))}

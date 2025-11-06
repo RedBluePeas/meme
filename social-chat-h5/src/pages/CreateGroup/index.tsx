@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Input, Textarea, Button, Select, SelectItem } from '@nextui-org/react';
+import { Input, Textarea, Button, Select, SelectItem } from '@heroui/react';
 import { MainLayout } from '@/components/Layout';
 import { useGroup } from '@/hooks/useGroup';
 import { JoinType } from '@/types/models';

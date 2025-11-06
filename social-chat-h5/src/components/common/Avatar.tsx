@@ -3,7 +3,7 @@
  * 支持图片、文字、在线状态显示
  */
 
-import { Avatar as NextAvatar, AvatarProps as NextAvatarProps } from '@nextui-org/react';
+import { Avatar as NextAvatar, AvatarProps as NextAvatarProps } from '@heroui/react';
 
 /**
  * 头像组件属性

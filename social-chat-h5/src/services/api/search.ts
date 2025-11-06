@@ -1,5 +1,5 @@
 /**
- * Search API - 搜索模块接口
+ * MagnifyingGlassIcon API - 搜索模块接口
  */
 
 import { request } from '../request';

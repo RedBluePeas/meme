@@ -1,5 +1,5 @@
 /**
- * 文件工具类 (Social chat Service File Util)
+ * 文件工具类 (Social chat Service DocumentIcon Util)
  * 处理文件上传、图片压缩、文件读取等操作
  */
 

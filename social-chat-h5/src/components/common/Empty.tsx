@@ -3,7 +3,7 @@
  * 用于列表、搜索结果等为空时的占位显示
  */
 
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 
 /**
  * 空状态组件属性

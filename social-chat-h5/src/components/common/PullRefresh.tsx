@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, ReactNode } from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 
 /**
  * 下拉刷新组件属性

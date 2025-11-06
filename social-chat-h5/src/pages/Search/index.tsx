@@ -1,12 +1,12 @@
 /**
- * Search - 全局搜索页面
+ * MagnifyingGlassIcon - 全局搜索页面
  * 性能优化: 使用防抖 + LazyImage
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Input, Tabs, Tab, Avatar, Card, CardBody } from '@nextui-org/react';
-import { Search as SearchIcon, X } from 'lucide-react';
+import { Input, Tabs, Tab, Avatar, Card, CardBody } from '@heroui/react';
+import { MagnifyingGlassIcon as MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { LazyImage } from '@/components/LazyImage';
 import { useSearch } from '@/hooks/useSearch';
@@ -57,7 +57,7 @@ const SearchPage: React.FC = () => {
               onChange={(e) => handleKeywordChange(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               placeholder="搜索用户、内容、群组"
-              startContent={<SearchIcon size={18} className="text-gray-400" />}
+              startContent={<MagnifyingGlassIcon className="w-[18px] h-[18px] text-gray-400" />}
               classNames={{ input: 'text-sm' }}
             />
             <button onClick={() => navigate(-1)} className="text-sm text-gray-600">
@@ -77,7 +77,7 @@ const SearchPage: React.FC = () => {
                     {item.keyword}
                   </span>
                   <button onClick={() => deleteHistory(item.id)}>
-                    <X size={14} className="text-gray-400" />
+                    <XMarkIcon className="w-3.5 h-3.5 text-gray-400" />
                   </button>
                 </div>
               ))}

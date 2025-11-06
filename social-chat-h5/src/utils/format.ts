@@ -86,8 +86,8 @@ export function formatRelativeTime(time: string | Date): string {
 /**
  * 格式化数字
  * - 小于1万：显示原数字
- * - 大于1万：显示 X.X万
- * - 大于1亿：显示 X.X亿
+ * - 大于1万：显示 XMarkIcon.XMarkIcon万
+ * - 大于1亿：显示 XMarkIcon.XMarkIcon亿
  */
 export function formatNumber(num: number): string {
   if (num < 10000) {

@@ -3,8 +3,8 @@
  */
 
 import React from 'react';
-import { Avatar, Card, CardBody, CardFooter, Image } from '@nextui-org/react';
-import { Heart, MessageCircle, Share2, MoreVertical } from 'lucide-react';
+import { Avatar, Card, CardBody, CardFooter, Image } from '@heroui/react';
+import { Heart, MessageCircle, Share2, MoreVertical } from '@heroicons/react/24/outline';
 import type { Feed } from '@/types';
 import { SSTimeUtil } from '@/utils';
 

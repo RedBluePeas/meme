@@ -4,8 +4,8 @@
  */
 
 import React, { useState, useRef } from 'react';
-import { Button, Textarea } from '@nextui-org/react';
-import { Send, Image, Smile, Plus } from 'lucide-react';
+import { Button, Textarea } from '@heroui/react';
+import { PaperAirplaneIcon, Image, FaceSmileIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { SendMessageParams } from '@/types/models';
 
 interface MessageInputProps {
@@ -93,7 +93,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
           size="sm"
           onClick={handleToggleTools}
         >
-          <Plus size={20} />
+          <PlusIcon className="w-5 h-5" />
         </Button>
 
         {/* 文本输入框 */}
@@ -120,7 +120,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
             onClick={handleSend}
             isLoading={sending}
           >
-            <Send size={18} />
+            <PaperAirplaneIcon className="w-[18px] h-[18px]" />
           </Button>
         ) : (
           <>
@@ -133,7 +133,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                 // TODO: 打开表情选择器
               }}
             >
-              <Smile size={20} />
+              <FaceSmileIcon className="w-5 h-5" />
             </Button>
 
             {/* 图片按钮 */}

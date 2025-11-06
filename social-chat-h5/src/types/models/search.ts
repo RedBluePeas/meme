@@ -1,5 +1,5 @@
 /**
- * Search - 搜索相关类型定义
+ * MagnifyingGlassIcon - 搜索相关类型定义
  */
 
 import { User, Post, Group } from './';

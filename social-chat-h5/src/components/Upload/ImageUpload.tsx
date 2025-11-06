@@ -4,8 +4,8 @@
  */
 
 import React, { useRef } from 'react';
-import { Button, Image, Progress } from '@nextui-org/react';
-import { X, Plus } from 'lucide-react';
+import { Button, Image, Progress } from '@heroui/react';
+import { XMarkIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { SSDialog } from '../SSDialog';
 
 interface ImageUploadProps {
@@ -32,8 +32,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   /**
    * 验证文件
    */
-  const validateFiles = (files: FileList): File[] => {
-    const validFiles: File[] = [];
+  const validateFiles = (files: FileList): DocumentIcon[] => {
+    const validFiles: DocumentIcon[] = [];
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -134,7 +134,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
               className="absolute top-1 right-1 bg-black/50 rounded-full p-1 text-white hover:bg-black/70 transition-colors"
               onClick={() => handleRemove(index)}
             >
-              <X size={16} />
+              <XMarkIcon className="w-4 h-4" />
             </button>
           </div>
         ))}
@@ -146,7 +146,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
             onClick={handleClick}
           >
             <div className="text-center">
-              <Plus className="mx-auto text-gray-400" size={32} />
+              <PlusIcon className="mx-auto text-gray-400" size={32} />
               <span className="text-xs text-gray-500 mt-1">
                 {value.length}/{maxCount}
               </span>

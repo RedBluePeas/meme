@@ -5,8 +5,8 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Badge } from '@nextui-org/react';
-import { UserPlus, Users, Bell } from 'lucide-react';
+import { Button, Badge } from '@heroui/react';
+import { UserPlusIcon, UsersIcon, BellIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { PullRefresh } from '@/components/common';
 import { FriendList } from './components';
@@ -83,7 +83,7 @@ const ContactPage: React.FC = () => {
             size="sm"
             onClick={handleAddFriend}
           >
-            <UserPlus size={20} />
+            <UserPlusIcon className="w-5 h-5" />
           </Button>
         ),
       }}
@@ -98,7 +98,7 @@ const ContactPage: React.FC = () => {
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Bell size={20} className="text-orange-500" />
+                <BellIcon className="w-5 h-5 text-orange-500" />
               </div>
               <span className="font-medium text-gray-900">好友请求</span>
             </div>
@@ -114,7 +114,7 @@ const ContactPage: React.FC = () => {
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Users size={20} className="text-blue-500" />
+                <UsersIcon className="w-5 h-5 text-blue-500" />
               </div>
               <span className="font-medium text-gray-900">我的群组</span>
             </div>

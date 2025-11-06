@@ -4,7 +4,7 @@
  */
 
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 
 /**
  * 导航项配置接口

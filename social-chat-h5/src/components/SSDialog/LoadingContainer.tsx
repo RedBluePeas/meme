@@ -2,7 +2,7 @@
  * LoadingContainer - 加载中容器组件
  */
 
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LoadingOptions } from './types';
 

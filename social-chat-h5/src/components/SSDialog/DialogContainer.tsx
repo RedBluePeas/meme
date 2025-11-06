@@ -2,7 +2,7 @@
  * DialogContainer - 对话框容器组件
  */
 
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@heroui/react';
 import { DialogOptions } from './types';
 
 interface DialogContainerProps extends DialogOptions {

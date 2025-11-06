@@ -5,7 +5,7 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Tabs, Tab, Chip } from '@nextui-org/react';
+import { Tabs, Tab, Chip } from '@heroui/react';
 import { MainLayout } from '@/components/Layout';
 import { PullRefresh } from '@/components/common';
 import { TopicList } from './components';

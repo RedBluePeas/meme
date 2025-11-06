@@ -5,8 +5,8 @@
 
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@nextui-org/react';
-import { MoreVertical, Phone, Video } from 'lucide-react';
+import { Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@heroui/react';
+import { MoreVertical, PhoneIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { MessageList, MessageInput } from './components';
 import { useMessage } from '@/hooks/useMessage';
@@ -149,12 +149,12 @@ const ChatRoomPage: React.FC = () => {
           <div className="flex items-center gap-2">
             {/* 语音通话 */}
             <Button isIconOnly variant="light" size="sm">
-              <Phone size={18} />
+              <PhoneIcon className="w-[18px] h-[18px]" />
             </Button>
 
             {/* 视频通话 */}
             <Button isIconOnly variant="light" size="sm">
-              <Video size={18} />
+              <VideoCameraIcon className="w-[18px] h-[18px]" />
             </Button>
 
             {/* 更多菜单 */}

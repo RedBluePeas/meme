@@ -5,8 +5,8 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Button, Card, CardBody, Spinner } from '@nextui-org/react';
-import { Clock, Check, X } from 'lucide-react';
+import { Avatar, Button, Card, CardBody, Spinner } from '@heroui/react';
+import { ClockIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { PullRefresh, InfiniteScroll } from '@/components/common';
 import { useContact } from '@/hooks/useContact';
@@ -148,7 +148,7 @@ const FriendRequestPage: React.FC = () => {
                           {request.sender.nickname}
                         </h3>
                         <div className="flex items-center gap-1 text-xs text-gray-400">
-                          <Clock size={12} />
+                          <ClockIcon className="w-3 h-3" />
                           <span>{formatRelativeTime(request.createdAt)}</span>
                         </div>
                       </div>
@@ -173,7 +173,7 @@ const FriendRequestPage: React.FC = () => {
                           <Button
                             size="sm"
                             color="primary"
-                            startContent={<Check size={14} />}
+                            startContent={<CheckIcon className="w-3.5 h-3.5" />}
                             onClick={() => handleAccept(request)}
                             className="flex-1"
                           >
@@ -182,7 +182,7 @@ const FriendRequestPage: React.FC = () => {
                           <Button
                             size="sm"
                             variant="bordered"
-                            startContent={<X size={14} />}
+                            startContent={<XMarkIcon className="w-3.5 h-3.5" />}
                             onClick={() => handleReject(request)}
                             className="flex-1"
                           >

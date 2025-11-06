@@ -5,8 +5,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Input, Button, Avatar, Card, CardBody, Spinner } from '@nextui-org/react';
-import { Search, UserPlus, Users } from 'lucide-react';
+import { Input, Button, Avatar, Card, CardBody, Spinner } from '@heroui/react';
+import { MagnifyingGlassIcon, UserPlusIcon, UsersIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { useContact } from '@/hooks/useContact';
 import { SearchUserResult } from '@/types/models';
@@ -96,7 +96,7 @@ const AddFriendPage: React.FC = () => {
               onChange={(e) => setKeyword(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="搜索用户名/手机号/ID"
-              startContent={<Search size={18} className="text-gray-400" />}
+              startContent={<MagnifyingGlassIcon className="w-[18px] h-[18px] text-gray-400" />}
               classNames={{
                 input: 'text-sm',
               }}
@@ -164,7 +164,7 @@ const AddFriendPage: React.FC = () => {
                       </p>
                       {user.mutualFriendsCount > 0 && (
                         <div className="flex items-center gap-1 mt-1">
-                          <Users size={12} className="text-gray-400" />
+                          <UsersIcon className="w-3 h-3" className="text-gray-400" />
                           <span className="text-xs text-gray-400">
                             {user.mutualFriendsCount} 个共同好友
                           </span>
@@ -182,7 +182,7 @@ const AddFriendPage: React.FC = () => {
                         <Button
                           size="sm"
                           color="primary"
-                          startContent={<UserPlus size={16} />}
+                          startContent={<UserPlusIcon className="w-4 h-4" />}
                           onClick={() => handleAddFriend(user)}
                         >
                           添加
@@ -201,7 +201,7 @@ const AddFriendPage: React.FC = () => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20">
-            <Search size={48} className="text-gray-300 mb-4" />
+            <MagnifyingGlassIcon className="w-12 h-12 text-gray-300 mb-4" />
             <p className="text-gray-400 text-sm">输入关键词搜索用户</p>
             <p className="text-gray-400 text-xs mt-1">支持用户名、手机号、ID搜索</p>
           </div>

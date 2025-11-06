@@ -5,8 +5,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Textarea, Select, SelectItem, Chip } from '@nextui-org/react';
-import { MapPin, Hash, Eye, EyeOff, Users, Lock } from 'lucide-react';
+import { Button, Textarea, Select, SelectItem, Chip } from '@heroui/react';
+import { MapPinIcon, HashtagIcon, EyeIcon, EyeSlashIcon, UsersIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { usePublish } from '@/hooks/usePublish';
 import { ImageUpload } from '@/components/Upload';
 import { SSDialog } from '@/components/SSDialog';
@@ -84,9 +84,9 @@ const PublishPage: React.FC = () => {
    * 可见性选项
    */
   const visibilityOptions = [
-    { value: 'public', label: '公开', icon: <Eye size={18} />, desc: '所有人可见' },
-    { value: 'friends', label: '好友可见', icon: <Users size={18} />, desc: '仅好友可见' },
-    { value: 'private', label: '私密', icon: <Lock size={18} />, desc: '仅自己可见' },
+    { value: 'public', label: '公开', icon: <EyeIcon className="w-[18px] h-[18px]" />, desc: '所有人可见' },
+    { value: 'friends', label: '好友可见', icon: <UsersIcon className="w-[18px] h-[18px]" />, desc: '仅好友可见' },
+    { value: 'private', label: '私密', icon: <LockClosedIcon className="w-[18px] h-[18px]" />, desc: '仅自己可见' },
   ];
 
   return (
@@ -191,7 +191,7 @@ const PublishPage: React.FC = () => {
             }}
           >
             <div className="flex items-center gap-2">
-              <Hash size={18} />
+              <HashtagIcon className="w-[18px] h-[18px]" />
               <span>添加话题</span>
             </div>
             <span className="text-gray-400">
@@ -208,7 +208,7 @@ const PublishPage: React.FC = () => {
             }}
           >
             <div className="flex items-center gap-2">
-              <MapPin size={18} />
+              <MapPinIcon className="w-[18px] h-[18px]" />
               <span>添加位置</span>
             </div>
             <span className="text-gray-400">

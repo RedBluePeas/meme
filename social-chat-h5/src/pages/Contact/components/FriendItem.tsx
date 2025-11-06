@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Avatar, Badge } from '@nextui-org/react';
+import { Avatar, Badge } from '@heroui/react';
 import { LazyImage } from '@/components/LazyImage';
 import { Friend } from '@/types/models';
 

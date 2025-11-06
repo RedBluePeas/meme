@@ -5,8 +5,8 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
-import { Plus } from 'lucide-react';
+import { Button } from '@heroui/react';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { PullRefresh } from '@/components/common';
 import { ConversationList } from './components';
@@ -85,7 +85,7 @@ const MessagePage: React.FC = () => {
             size="sm"
             onClick={handleCreateConversation}
           >
-            <Plus size={20} />
+            <PlusIcon className="w-5 h-5" />
           </Button>
         ),
       }}

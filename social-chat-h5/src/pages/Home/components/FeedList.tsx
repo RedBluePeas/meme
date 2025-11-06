@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 import type { Feed } from '@/types';
 import { FeedItem } from './FeedItem';
 import { Empty } from '@/components/common';

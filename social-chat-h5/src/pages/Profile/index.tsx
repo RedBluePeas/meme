@@ -5,18 +5,18 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 import {
   Heart,
   Star,
-  Clock,
+  ClockIcon,
   Settings,
   Shield,
-  Bell,
+  BellIcon,
   Moon,
   Info,
   LogOut,
-} from 'lucide-react';
+} from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { ProfileHeader, ProfileStats, SettingsList, SettingItem } from './components';
 import { useAppSelector, useAppDispatch } from '@/store';
@@ -60,7 +60,7 @@ const ProfilePage: React.FC = () => {
     },
     {
       id: 'history',
-      icon: <Clock size={20} />,
+      icon: <ClockIcon className="w-5 h-5" />,
       title: '浏览历史',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },
@@ -81,7 +81,7 @@ const ProfilePage: React.FC = () => {
     },
     {
       id: 'notifications',
-      icon: <Bell size={20} />,
+      icon: <BellIcon className="w-5 h-5" />,
       title: '通知设置',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },

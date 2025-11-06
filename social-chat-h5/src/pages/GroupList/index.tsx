@@ -5,8 +5,8 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, CardBody, Avatar, Spinner } from '@nextui-org/react';
-import { Plus, Users } from 'lucide-react';
+import { Button, Card, CardBody, Avatar, Spinner } from '@heroui/react';
+import { PlusIcon, UsersIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { VirtualList } from '@/components/VirtualList';
 import { LazyImage } from '@/components/LazyImage';
@@ -51,7 +51,7 @@ const GroupListPage: React.FC = () => {
               <div className="flex-1">
                 <h3 className="font-medium">{group.name}</h3>
                 <div className="flex items-center gap-1 text-sm text-gray-500">
-                  <Users size={14} />
+                  <UsersIcon className="w-3.5 h-3.5" />
                   <span>{group.memberCount} 人</span>
                 </div>
               </div>
@@ -73,7 +73,7 @@ const GroupListPage: React.FC = () => {
         onBack: () => navigate(-1),
         rightContent: (
           <Button isIconOnly variant="light" size="sm" onClick={handleCreate}>
-            <Plus size={20} />
+            <PlusIcon className="w-5 h-5" />
           </Button>
         ),
       }}
@@ -81,7 +81,7 @@ const GroupListPage: React.FC = () => {
       <div className="h-screen bg-gray-50 pt-4">
         {myGroups.length === 0 && !myGroupsLoading ? (
           <div className="flex flex-col items-center justify-center h-64 text-gray-400">
-            <Users size={48} className="mb-4" />
+            <UsersIcon className="w-12 h-12 mb-4" />
             <p>还没有加入任何群组</p>
             <Button color="primary" className="mt-4" onClick={handleCreate}>
               创建群组
@@ -99,7 +99,7 @@ const GroupListPage: React.FC = () => {
             onLoadMore={handleLoadMore}
             emptyContent={
               <div className="flex flex-col items-center justify-center text-gray-400">
-                <Users size={48} className="mb-4" />
+                <UsersIcon className="w-12 h-12 mb-4" />
                 <p>还没有加入任何群组</p>
               </div>
             }
