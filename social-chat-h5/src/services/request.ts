@@ -227,4 +227,6 @@ export function upload<T = any>(
     .then((response) => response.data.data);
 }
 
+// 导出 axios 实例
+export { request };
 export default request;

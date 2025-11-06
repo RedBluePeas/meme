@@ -9,28 +9,28 @@ import { Input, Textarea, Button, Avatar } from '@nextui-org/react';
 import { Camera } from 'lucide-react';
 import { MainLayout } from '@/components/Layout';
 import { useAppSelector, useAppDispatch } from '@/store';
-import { updateUserAsync } from '@/store/slices/userSlice';
-import { uploadApi } from '@/services/api';
+import { updateUserInfo } from '@/store/slices/userSlice';
+import { uploadApi, userApi } from '@/services/api';
 import { SSDialog } from '@/components/SSDialog';
 
 const EditProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
+  const { userInfo } = useAppSelector((state) => state.user);
 
-  const [nickname, setNickname] = useState(user?.nickname || '');
-  const [signature, setSignature] = useState(user?.signature || '');
-  const [avatar, setAvatar] = useState(user?.avatar || '');
+  const [nickname, setNickname] = useState(userInfo?.nickname || '');
+  const [signature, setSignature] = useState((userInfo as any)?.signature || '');
+  const [avatar, setAvatar] = useState(userInfo?.avatar || '');
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setNickname(user.nickname);
-      setSignature(user.signature || '');
-      setAvatar(user.avatar);
+    if (userInfo) {
+      setNickname(userInfo.nickname);
+      setSignature((userInfo as any).signature || '');
+      setAvatar(userInfo.avatar || '');
     }
-  }, [user]);
+  }, [userInfo]);
 
   /**
    * 上传头像
@@ -73,13 +73,15 @@ const EditProfilePage: React.FC = () => {
     setSaving(true);
 
     try {
-      await dispatch(
-        updateUserAsync({
-          nickname: nickname.trim(),
-          signature: signature.trim(),
-          avatar,
-        })
-      ).unwrap();
+      // 调用 API 更新用户信息
+      const updatedUser = await userApi.updateProfile({
+        nickname: nickname.trim(),
+        bio: signature.trim(),
+        avatar,
+      });
+
+      // 更新本地状态
+      dispatch(updateUserInfo(updatedUser));
 
       SSDialog.toast.success('保存成功');
       navigate(-1);
