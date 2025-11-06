@@ -7,3 +7,4 @@ export * as userApi from './user';
 export * as postApi from './post';
 export * as topicApi from './topic';
 export * as uploadApi from './upload';
+export * as messageApi from './message';

@@ -10,6 +10,7 @@ import authReducer from './slices/authSlice';
 import homeReducer from './slices/homeSlice';
 import communityReducer from './slices/communitySlice';
 import publishReducer from './slices/publishSlice';
+import messageReducer from './slices/messageSlice';
 
 /**
  * 创建 Store
@@ -22,6 +23,7 @@ export const store = configureStore({
     home: homeReducer,
     community: communityReducer,
     publish: publishReducer,
+    message: messageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
