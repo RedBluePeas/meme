@@ -2,7 +2,7 @@
 
 > 本文档是社交聊天H5应用项目的开发规范和约定，Claude AI在每次对话中都应严格遵循这些规则。
 
-**版本**: v1.0
+**版本**: v1.1
 **更新日期**: 2025-11-06
 **适用范围**: 所有项目开发任务
 
@@ -300,6 +300,729 @@ src/
 | 类型文件 | camelCase + .d.ts | `user.types.ts` |
 | 样式文件 | 同组件名 | `UserProfile.module.css` |
 | 测试文件 | 原文件名 + .test | `utils.test.ts` |
+
+### 4.4 项目自定义规范（重要）
+
+本节包含针对本项目的特殊规范要求，所有开发人员必须严格遵守。
+
+#### 4.4.1 自定义类文件命名规范
+
+**规则**: 所有自定义工具类、服务类、助手类文件名必须以两个相同的大写字母开头，表示项目统一标识。
+
+**项目前缀**: `SC`（Social Chat 的缩写）
+
+```typescript
+// ✅ 正确示例
+utils/
+├── SSTimeUtil.ts          // 时间工具类（SS = Social chat Service）
+├── SSStringUtil.ts        // 字符串工具类
+├── SSValidateUtil.ts      // 验证工具类
+├── SSStorageUtil.ts       // 存储工具类
+├── SSDictUtil.ts          // 字典工具类
+├── SSHttpUtil.ts          // HTTP工具类
+
+// ❌ 错误示例
+utils/
+├── timeUtil.ts            // 缺少项目前缀
+├── StringHelper.ts        // 缺少项目前缀
+├── validate.ts            // 缺少项目前缀
+```
+
+**说明**:
+- 前缀字母必须大写，后面紧跟驼峰命名
+- 该规范适用于：工具类、服务类、助手类、管理类
+- 不适用于：React组件、类型定义、常量文件
+
+#### 4.4.2 封装优先原则
+
+**规则**: 项目中必须对常用功能进行充分封装，避免代码重复，提高可维护性。
+
+**必须封装的模块**:
+
+1. **弹窗组件封装** (`components/SSDialog/`)
+```typescript
+// ✅ 封装统一的对话框组件
+// components/SSDialog/index.tsx
+export const SSDialog = {
+  // 确认对话框
+  confirm: (options: ConfirmOptions) => {},
+
+  // 警告对话框
+  alert: (options: AlertOptions) => {},
+
+  // 提示对话框
+  toast: (message: string, type?: 'success' | 'error' | 'warning') => {},
+
+  // 加载中
+  loading: (show: boolean, text?: string) => {},
+
+  // 自定义对话框
+  custom: (options: CustomDialogOptions) => {}
+};
+
+// 使用示例
+SSDialog.confirm({
+  title: '确认删除',
+  content: '删除后无法恢复，是否继续？',
+  onConfirm: () => handleDelete()
+});
+```
+
+2. **时间处理类** (`utils/SSTimeUtil.ts`)
+```typescript
+// ✅ 封装统一的时间处理工具
+// utils/SSTimeUtil.ts
+
+/**
+ * 时间工具类
+ * 统一处理项目中所有时间相关操作
+ */
+export class SSTimeUtil {
+  /**
+   * 格式化时间
+   * @param date - 日期对象或时间戳
+   * @param format - 格式字符串，默认 'YYYY-MM-DD HH:mm:ss'
+   */
+  static format(date: Date | number, format?: string): string {
+    // 实现...
+  }
+
+  /**
+   * 获取相对时间（刚刚、5分钟前、1小时前等）
+   * @param timestamp - 时间戳
+   */
+  static relative(timestamp: number): string {
+    // 实现...
+  }
+
+  /**
+   * 判断是否是今天
+   */
+  static isToday(date: Date | number): boolean {
+    // 实现...
+  }
+
+  /**
+   * 计算时间差
+   */
+  static diff(start: Date | number, end: Date | number, unit?: 'day' | 'hour' | 'minute'): number {
+    // 实现...
+  }
+}
+
+// 使用示例
+const formattedTime = SSTimeUtil.format(Date.now(), 'YYYY-MM-DD');
+const relativeTime = SSTimeUtil.relative(message.createdAt);
+```
+
+3. **数据验证类** (`utils/SSValidateUtil.ts`)
+```typescript
+// ✅ 封装统一的数据验证工具
+// utils/SSValidateUtil.ts
+
+/**
+ * 数据验证工具类
+ * 处理所有非空判断、类型校验、格式验证
+ */
+export class SSValidateUtil {
+  /**
+   * 非空判断（null、undefined、空字符串）
+   */
+  static isNotEmpty(value: any): boolean {
+    return value !== null && value !== undefined && value !== '';
+  }
+
+  /**
+   * 邮箱验证
+   */
+  static isEmail(email: string): boolean {
+    const reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return reg.test(email);
+  }
+
+  /**
+   * 手机号验证（中国）
+   */
+  static isPhone(phone: string): boolean {
+    const reg = /^1[3-9]\d{9}$/;
+    return reg.test(phone);
+  }
+
+  /**
+   * 密码强度验证（至少8位，包含大小写字母和数字）
+   */
+  static isStrongPassword(password: string): boolean {
+    const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+    return reg.test(password);
+  }
+
+  /**
+   * 必填项验证（用于表单）
+   */
+  static required(value: any, fieldName: string): string | null {
+    if (!this.isNotEmpty(value)) {
+      return `${fieldName}不能为空`;
+    }
+    return null;
+  }
+
+  /**
+   * 数组非空验证
+   */
+  static isArrayNotEmpty<T>(arr: T[]): boolean {
+    return Array.isArray(arr) && arr.length > 0;
+  }
+
+  /**
+   * 对象非空验证
+   */
+  static isObjectNotEmpty(obj: object): boolean {
+    return obj !== null && typeof obj === 'object' && Object.keys(obj).length > 0;
+  }
+}
+
+// 使用示例
+if (SSValidateUtil.isNotEmpty(username)) {
+  // 处理逻辑
+}
+
+const error = SSValidateUtil.required(email, '邮箱');
+if (error) {
+  Toast.show(error);
+}
+```
+
+4. **字符串工具类** (`utils/SSStringUtil.ts`)
+```typescript
+// ✅ 封装字符串处理工具
+// utils/SSStringUtil.ts
+
+/**
+ * 字符串工具类
+ * 处理字符串格式化、截取、脱敏等操作
+ */
+export class SSStringUtil {
+  /**
+   * 手机号脱敏
+   * @example '13812345678' => '138****5678'
+   */
+  static maskPhone(phone: string): string {
+    if (!phone || phone.length !== 11) return phone;
+    return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+  }
+
+  /**
+   * 邮箱脱敏
+   * @example 'test@example.com' => 't***@example.com'
+   */
+  static maskEmail(email: string): string {
+    if (!email) return email;
+    return email.replace(/(.{1}).*(@.*)/, '$1***$2');
+  }
+
+  /**
+   * 字符串截取（超出显示省略号）
+   */
+  static ellipsis(str: string, maxLength: number): string {
+    if (!str || str.length <= maxLength) return str;
+    return str.substring(0, maxLength) + '...';
+  }
+
+  /**
+   * 首字母大写
+   */
+  static capitalize(str: string): string {
+    if (!str) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  /**
+   * 驼峰转下划线
+   * @example 'userName' => 'user_name'
+   */
+  static camelToSnake(str: string): string {
+    return str.replace(/([A-Z])/g, '_$1').toLowerCase();
+  }
+
+  /**
+   * 下划线转驼峰
+   * @example 'user_name' => 'userName'
+   */
+  static snakeToCamel(str: string): string {
+    return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+  }
+}
+
+// 使用示例
+const maskedPhone = SSStringUtil.maskPhone('13812345678'); // '138****5678'
+const shortText = SSStringUtil.ellipsis(longText, 50);
+```
+
+5. **字典管理类** (`utils/SSDictUtil.ts`)
+```typescript
+// ✅ 封装字典数据管理
+// utils/SSDictUtil.ts
+
+/**
+ * 字典工具类
+ * 统一管理枚举值、下拉选项等字典数据
+ */
+export class SSDictUtil {
+  // 用户状态字典
+  static readonly USER_STATUS = {
+    ACTIVE: { value: 'active', label: '正常', color: 'green' },
+    INACTIVE: { value: 'inactive', label: '停用', color: 'gray' },
+    BANNED: { value: 'banned', label: '封禁', color: 'red' }
+  };
+
+  // 消息类型字典
+  static readonly MESSAGE_TYPE = {
+    TEXT: { value: 'text', label: '文字消息', icon: 'text' },
+    IMAGE: { value: 'image', label: '图片消息', icon: 'image' },
+    VIDEO: { value: 'video', label: '视频消息', icon: 'video' },
+    AUDIO: { value: 'audio', label: '语音消息', icon: 'audio' },
+    FILE: { value: 'file', label: '文件消息', icon: 'file' }
+  };
+
+  /**
+   * 根据value获取label
+   */
+  static getLabel(dict: any, value: string): string {
+    return Object.values(dict).find((item: any) => item.value === value)?.label || value;
+  }
+
+  /**
+   * 获取字典数组（用于下拉选项）
+   */
+  static toArray(dict: any): Array<{ value: string; label: string }> {
+    return Object.values(dict);
+  }
+}
+
+// 使用示例
+const statusLabel = SSDictUtil.getLabel(SSDictUtil.USER_STATUS, 'active'); // '正常'
+const messageTypes = SSDictUtil.toArray(SSDictUtil.MESSAGE_TYPE); // 用于Select组件
+```
+
+6. **存储工具类** (`utils/SSStorageUtil.ts`)
+```typescript
+// ✅ 封装本地存储操作
+// utils/SSStorageUtil.ts
+
+/**
+ * 本地存储工具类
+ * 统一处理 localStorage 和 sessionStorage 操作，支持过期时间
+ */
+export class SSStorageUtil {
+  /**
+   * 设置localStorage（支持过期时间）
+   * @param key - 键名
+   * @param value - 值（自动JSON序列化）
+   * @param expire - 过期时间（秒），不传则永久有效
+   */
+  static set(key: string, value: any, expire?: number): void {
+    const data = {
+      value,
+      expire: expire ? Date.now() + expire * 1000 : null
+    };
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  /**
+   * 获取localStorage
+   * @param key - 键名
+   * @returns 值（自动JSON反序列化），过期或不存在返回null
+   */
+  static get<T = any>(key: string): T | null {
+    const json = localStorage.getItem(key);
+    if (!json) return null;
+
+    try {
+      const data = JSON.parse(json);
+      // 检查是否过期
+      if (data.expire && Date.now() > data.expire) {
+        this.remove(key);
+        return null;
+      }
+      return data.value;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  /**
+   * 删除localStorage
+   */
+  static remove(key: string): void {
+    localStorage.removeItem(key);
+  }
+
+  /**
+   * 清空localStorage
+   */
+  static clear(): void {
+    localStorage.clear();
+  }
+
+  /**
+   * sessionStorage操作（无过期时间）
+   */
+  static session = {
+    set: (key: string, value: any) => {
+      sessionStorage.setItem(key, JSON.stringify(value));
+    },
+    get: <T = any>(key: string): T | null => {
+      const json = sessionStorage.getItem(key);
+      return json ? JSON.parse(json) : null;
+    },
+    remove: (key: string) => {
+      sessionStorage.removeItem(key);
+    },
+    clear: () => {
+      sessionStorage.clear();
+    }
+  };
+}
+
+// 使用示例
+SSStorageUtil.set('user', userInfo, 7 * 24 * 3600); // 7天过期
+const user = SSStorageUtil.get<User>('user');
+SSStorageUtil.session.set('temp', tempData);
+```
+
+#### 4.4.3 代码行数限制与拆分原则
+
+**规则**: 当单个函数或组件超过指定行数时，必须进行拆分和封装。
+
+**行数限制**:
+- 单个函数：不超过 **50行**
+- 单个组件：不超过 **200行**
+- 单个文件：不超过 **500行**
+
+```typescript
+// ❌ 错误：函数过长（超过50行）
+function handleSubmit() {
+  // 100+ 行代码
+  // 包含验证、处理、请求、错误处理等多个职责
+}
+
+// ✅ 正确：拆分成多个小函数
+function handleSubmit() {
+  const validationError = validateForm();
+  if (validationError) {
+    showError(validationError);
+    return;
+  }
+
+  const formData = prepareFormData();
+  submitData(formData);
+}
+
+function validateForm(): string | null {
+  // 验证逻辑（不超过50行）
+}
+
+function prepareFormData(): FormData {
+  // 数据准备逻辑（不超过50行）
+}
+
+async function submitData(data: FormData): Promise<void> {
+  // 提交逻辑（不超过50行）
+}
+```
+
+```typescript
+// ❌ 错误：组件过长（超过200行）
+export const UserProfile = () => {
+  // 300+ 行代码
+  // 包含状态、逻辑、UI渲染全部混在一起
+};
+
+// ✅ 正确：拆分成多个小组件
+export const UserProfile = () => {
+  return (
+    <div>
+      <ProfileHeader user={user} />
+      <ProfileInfo user={user} />
+      <ProfileStats stats={stats} />
+      <ProfilePosts posts={posts} />
+    </div>
+  );
+};
+
+// 拆分出的子组件（每个不超过200行）
+const ProfileHeader = ({ user }) => { /* ... */ };
+const ProfileInfo = ({ user }) => { /* ... */ };
+const ProfileStats = ({ stats }) => { /* ... */ };
+const ProfilePosts = ({ posts }) => { /* ... */ };
+```
+
+#### 4.4.4 UI、请求、逻辑分离原则
+
+**规则**: 组件必须遵循 UI、请求、逻辑三层分离原则，提高代码可维护性和可测试性。
+
+**分离方案**:
+
+```typescript
+// ❌ 错误：UI、请求、逻辑混在一起
+export const UserList = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    // 请求逻辑混在组件中
+    axios.get('/api/users').then(res => {
+      // 业务逻辑混在组件中
+      const filteredUsers = res.data.filter(u => u.status === 'active');
+      setUsers(filteredUsers);
+    });
+  }, []);
+
+  return (
+    <div>
+      {users.map(user => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+    </div>
+  );
+};
+```
+
+```typescript
+// ✅ 正确：三层分离
+
+// 1. API层（services/api/user.ts）- 负责请求
+export const userApi = {
+  getUsers: () => axios.get<User[]>('/api/users'),
+  getUserById: (id: string) => axios.get<User>(`/api/users/${id}`),
+  createUser: (data: CreateUserDto) => axios.post('/api/users', data)
+};
+
+// 2. 逻辑层（hooks/useUserList.ts）- 负责业务逻辑
+export const useUserList = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const { data } = await userApi.getUsers();
+      // 业务逻辑：过滤活跃用户
+      const activeUsers = data.filter(u => u.status === 'active');
+      setUsers(activeUsers);
+    } catch (error) {
+      Toast.show('获取用户列表失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  return { users, loading, fetchUsers };
+};
+
+// 3. UI层（components/UserList/index.tsx）- 负责渲染
+export const UserList: React.FC = () => {
+  const { users, loading } = useUserList();
+
+  if (loading) return <Loading />;
+
+  return (
+    <div className={styles.userList}>
+      {users.map(user => (
+        <UserCard key={user.id} user={user} />
+      ))}
+    </div>
+  );
+};
+```
+
+**目录结构示例**:
+```
+src/
+├── services/api/          # API请求层
+│   ├── user.ts
+│   ├── message.ts
+│   └── auth.ts
+├── hooks/                 # 业务逻辑层
+│   ├── useUserList.ts
+│   ├── useAuth.ts
+│   └── useChat.ts
+├── components/            # UI展示层
+│   ├── UserList/
+│   └── ChatRoom/
+```
+
+#### 4.4.5 测试文件与临时文档管理
+
+**规则**: 测试文件和临时修改文档不得提交到项目仓库中，保持代码库整洁。
+
+**禁止提交的文件**:
+- `*.test.ts` / `*.spec.ts` - 单元测试文件
+- `test/` - 测试目录
+- `*.draft.ts` - 草稿文件
+- `temp/` - 临时文件目录
+- `*.bak` - 备份文件
+- `.DS_Store` - 系统文件
+- `debug.log` - 调试日志
+
+**`.gitignore` 配置**:
+```bash
+# ✅ 必须配置的 .gitignore 规则
+
+# 测试文件（不提交到仓库）
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+/test/
+/tests/
+/__tests__/
+
+# 临时文件
+*.tmp
+*.temp
+*.draft
+*.bak
+temp/
+tmp/
+
+# 调试文件
+debug.log
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE配置（个人配置）
+.vscode/settings.json
+.idea/workspace.xml
+```
+
+**注意事项**:
+- 测试代码应该写在单独的测试分支中，不合并到主分支
+- 如需测试，在本地测试目录中进行，测试完成后删除
+- 临时调试代码必须在提交前清理干净
+- 使用 `git status` 检查，确保不会误提交测试文件
+
+#### 4.4.6 目录组织与组件管理规范
+
+**规则**: 严格的目录层级管理，子组件必须放在父组件的子目录中，通用组件提升到上级目录。
+
+**目录组织原则**:
+1. **子组件在子目录**: 仅在父组件中使用的子组件，放在父组件目录的子文件夹中
+2. **通用组件在上级**: 多处使用的组件提升到 `components/` 目录
+3. **单一职责**: 每个目录只负责一个功能模块
+4. **就近原则**: 相关文件放在一起，减少跨目录引用
+
+```
+// ✅ 正确的目录组织
+
+src/
+├── components/                    # 通用组件（多处使用）
+│   ├── Button/                    # 按钮组件（全局通用）
+│   │   ├── index.tsx
+│   │   ├── Button.module.css
+│   │   └── types.ts
+│   ├── Avatar/                    # 头像组件（全局通用）
+│   │   ├── index.tsx
+│   │   └── Avatar.module.css
+│   └── Empty/                     # 空状态组件（全局通用）
+│       └── index.tsx
+│
+├── views/                         # 页面组件
+│   ├── Chat/                      # 聊天页面
+│   │   ├── index.tsx              # 主组件
+│   │   ├── ChatList/              # 子组件：会话列表（仅在Chat中使用）
+│   │   │   ├── index.tsx
+│   │   │   ├── ChatList.module.css
+│   │   │   └── ChatListItem/      # 孙组件：会话列表项（仅在ChatList中使用）
+│   │   │       ├── index.tsx
+│   │   │       └── ChatListItem.module.css
+│   │   ├── ChatRoom/              # 子组件：聊天室（仅在Chat中使用）
+│   │   │   ├── index.tsx
+│   │   │   ├── MessageList/       # 孙组件：消息列表
+│   │   │   │   ├── index.tsx
+│   │   │   │   └── MessageBubble/ # 曾孙组件：消息气泡
+│   │   │   │       └── index.tsx
+│   │   │   └── MessageInput/      # 孙组件：消息输入框
+│   │   │       └── index.tsx
+│   │   └── types.ts               # 聊天页面的类型定义
+│   │
+│   └── User/                      # 用户页面
+│       ├── index.tsx
+│       ├── Profile/               # 子组件：个人资料（仅在User中使用）
+│       │   ├── index.tsx
+│       │   └── ProfileHeader/     # 孙组件
+│       │       └── index.tsx
+│       └── Settings/              # 子组件：设置（仅在User中使用）
+│           └── index.tsx
+```
+
+```
+// ❌ 错误的目录组织
+
+src/
+├── components/
+│   ├── Button/
+│   ├── ChatListItem/              # ❌ 错误：仅在ChatList中使用，应该在ChatList子目录
+│   ├── MessageBubble/             # ❌ 错误：仅在MessageList中使用，应该在MessageList子目录
+│   └── ProfileHeader/             # ❌ 错误：仅在Profile中使用，应该在Profile子目录
+│
+├── views/
+│   ├── Chat/
+│   │   ├── index.tsx
+│   │   ├── ChatList.tsx           # ❌ 错误：应该独立成目录
+│   │   └── ChatRoom.tsx           # ❌ 错误：应该独立成目录
+```
+
+**提升组件到上级目录的判断标准**:
+```typescript
+// 如果组件在 2个或以上 的不同父组件中使用，则提升到 components/
+
+// 示例1：Button 在多个地方使用 -> 提升到 components/
+<ChatRoom>
+  <Button>发送</Button>
+</ChatRoom>
+
+<Profile>
+  <Button>保存</Button>
+</Profile>
+
+// 示例2：ChatListItem 仅在 ChatList 中使用 -> 保持在 ChatList/ 子目录
+<ChatList>
+  {items.map(item => <ChatListItem key={item.id} item={item} />)}
+</ChatList>
+```
+
+**组件导出规范**:
+```typescript
+// ✅ 正确：使用 index.ts 统一导出
+
+// components/index.ts
+export { Button } from './Button';
+export { Avatar } from './Avatar';
+export { Empty } from './Empty';
+
+// 使用时统一从 components 导入
+import { Button, Avatar, Empty } from '@/components';
+
+// ❌ 错误：分散导入
+import { Button } from '@/components/Button';
+import { Avatar } from '@/components/Avatar';
+import { Empty } from '@/components/Empty';
+```
+
+**总结**:
+- ✅ 子组件在子目录，通用组件在上级
+- ✅ 使用2次及以上的组件才提升到 components/
+- ✅ 目录层级清晰，不超过4层
+- ✅ 使用 index.ts 统一导出
+- ❌ 禁止所有组件都放在 components/ 平铺
+- ❌ 禁止子组件和父组件平级放置
 
 ---
 
@@ -1676,6 +2399,15 @@ A:
 ---
 
 ## 20. 更新日志
+
+### v1.1 - 2025-11-06
+- 新增"项目自定义规范"章节（4.4）
+- 添加自定义类文件命名规范（SS前缀）
+- 添加封装优先原则（弹窗、时间、验证、字符串、字典、存储工具类）
+- 添加代码行数限制规范（函数50行、组件200行、文件500行）
+- 添加UI、请求、逻辑三层分离原则
+- 添加测试文件与临时文档管理规范
+- 添加目录组织与组件管理规范
 
 ### v1.0 - 2025-11-06
 - 初始版本
