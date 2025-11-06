@@ -36,6 +36,58 @@ import { DialogOptions, ToastOptions, LoadingOptions, DialogInstance } from './t
 
 class SSDialogService {
   /**
+   * Toast 提示对象
+   */
+  public toast: {
+    show: (options: ToastOptions) => DialogInstance;
+    success: (content: string, duration?: number) => DialogInstance;
+    error: (content: string, duration?: number) => DialogInstance;
+    warning: (content: string, duration?: number) => DialogInstance;
+    info: (content: string, duration?: number) => DialogInstance;
+  };
+
+  constructor() {
+    // 在构造函数中初始化 toast，确保 this 绑定正确
+    this.toast = {
+      show: (options: ToastOptions): DialogInstance => {
+        return this.showToast(options);
+      },
+
+      success: (content: string, duration?: number): DialogInstance => {
+        return this.showToast({
+          content,
+          type: 'success',
+          duration
+        });
+      },
+
+      error: (content: string, duration?: number): DialogInstance => {
+        return this.showToast({
+          content,
+          type: 'error',
+          duration
+        });
+      },
+
+      warning: (content: string, duration?: number): DialogInstance => {
+        return this.showToast({
+          content,
+          type: 'warning',
+          duration
+        });
+      },
+
+      info: (content: string, duration?: number): DialogInstance => {
+        return this.showToast({
+          content,
+          type: 'info',
+          duration
+        });
+      }
+    };
+  }
+
+  /**
    * 确认对话框
    */
   confirm(options: DialogOptions): DialogInstance {
@@ -71,65 +123,31 @@ class SSDialogService {
   }
 
   /**
-   * Toast 提示
+   * Toast 提示 - 基础方法
    */
-  toast = {
-    show: (options: ToastOptions): DialogInstance => {
-      const container = document.createElement('div');
-      document.body.appendChild(container);
-      const root = createRoot(container);
+  private showToast(options: ToastOptions): DialogInstance {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
 
-      const close = () => {
-        root.unmount();
-        document.body.removeChild(container);
-      };
+    const close = () => {
+      root.unmount();
+      document.body.removeChild(container);
+    };
 
-      root.render(
-        <ToastContainer
-          {...options}
-          isVisible={true}
-        />
-      );
+    root.render(
+      <ToastContainer
+        {...options}
+        isVisible={true}
+      />
+    );
 
-      // 自动关闭
-      const duration = options.duration || 2000;
-      setTimeout(close, duration);
+    // 自动关闭
+    const duration = options.duration || 2000;
+    setTimeout(close, duration);
 
-      return { close };
-    },
-
-    success: (content: string, duration?: number): DialogInstance => {
-      return SSDialogService.prototype.toast.show({
-        content,
-        type: 'success',
-        duration
-      });
-    },
-
-    error: (content: string, duration?: number): DialogInstance => {
-      return SSDialogService.prototype.toast.show({
-        content,
-        type: 'error',
-        duration
-      });
-    },
-
-    warning: (content: string, duration?: number): DialogInstance => {
-      return SSDialogService.prototype.toast.show({
-        content,
-        type: 'warning',
-        duration
-      });
-    },
-
-    info: (content: string, duration?: number): DialogInstance => {
-      return SSDialogService.prototype.toast.show({
-        content,
-        type: 'info',
-        duration
-      });
-    }
-  };
+    return { close };
+  }
 
   /**
    * 加载中对话框
