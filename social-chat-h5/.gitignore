@@ -1,0 +1,46 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test files (按照开发规范，不提交测试文件)
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+/test/
+/tests/
+/__tests__/
+
+# Temporary files
+*.tmp
+*.temp
+*.draft
+*.bak
+temp/
+tmp/
+
+# Environment files
+.env.local
+.env.*.local
