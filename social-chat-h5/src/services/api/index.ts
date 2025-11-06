@@ -9,3 +9,4 @@ export * as topicApi from './topic';
 export * as uploadApi from './upload';
 export * as messageApi from './message';
 export * as contactApi from './contact';
+export * as groupApi from './group';
