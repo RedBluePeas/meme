@@ -6,6 +6,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import userReducer from './slices/userSlice';
 import appReducer from './slices/appSlice';
+import authReducer from './slices/authSlice';
+import homeReducer from './slices/homeSlice';
 
 /**
  * 创建 Store
@@ -13,7 +15,9 @@ import appReducer from './slices/appSlice';
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer,
+    home: homeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
