@@ -3,13 +3,14 @@
  */
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@nextui-org/react';
 import { useAuth } from '@/hooks/useAuth';
 import { SSValidateUtil } from '@/utils';
 import { SSDialog } from '@/components/SSDialog';
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
   const { login, loading } = useAuth();
 
   const [form, setForm] = useState({
@@ -59,14 +60,23 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    const success = await login({
-      username: form.username.trim(),
-      password: form.password,
-    });
+    // TODO: Mock 跳转 - 开发阶段直接跳转到主页
+    // 等后端 API 开发完成后，取消注释下面的代码
+    SSDialog.toast.success('登录成功');
+    setTimeout(() => {
+      navigate('/home');
+    }, 500);
+    return;
 
-    if (success) {
-      // 登录成功会在 useAuth 中跳转
-    }
+    // 正式登录逻辑（暂时注释）
+    // const success = await login({
+    //   username: form.username.trim(),
+    //   password: form.password,
+    // });
+    //
+    // if (success) {
+    //   // 登录成功会在 useAuth 中跳转
+    // }
   };
 
   /**

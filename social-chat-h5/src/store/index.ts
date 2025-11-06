@@ -8,6 +8,8 @@ import userReducer from './slices/userSlice';
 import appReducer from './slices/appSlice';
 import authReducer from './slices/authSlice';
 import homeReducer from './slices/homeSlice';
+import communityReducer from './slices/communitySlice';
+import publishReducer from './slices/publishSlice';
 
 /**
  * 创建 Store
@@ -18,6 +20,8 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     home: homeReducer,
+    community: communityReducer,
+    publish: publishReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

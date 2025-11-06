@@ -3,13 +3,14 @@
  */
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@nextui-org/react';
 import { useAuth } from '@/hooks/useAuth';
 import { SSValidateUtil } from '@/utils';
 import { SSDialog } from '@/components/SSDialog';
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
   const { register, loading } = useAuth();
 
   const [form, setForm] = useState({
@@ -97,16 +98,25 @@ const RegisterPage: React.FC = () => {
       return;
     }
 
-    const success = await register({
-      username: form.username.trim(),
-      nickname: form.nickname.trim(),
-      password: form.password,
-      email: form.email.trim() || undefined,
-    });
+    // TODO: Mock 跳转 - 开发阶段直接跳转到主页
+    // 等后端 API 开发完成后，取消注释下面的代码
+    SSDialog.toast.success('注册成功');
+    setTimeout(() => {
+      navigate('/home');
+    }, 500);
+    return;
 
-    if (success) {
-      // 注册成功会在 useAuth 中跳转
-    }
+    // 正式注册逻辑（暂时注释）
+    // const success = await register({
+    //   username: form.username.trim(),
+    //   nickname: form.nickname.trim(),
+    //   password: form.password,
+    //   email: form.email.trim() || undefined,
+    // });
+    //
+    // if (success) {
+    //   // 注册成功会在 useAuth 中跳转
+    // }
   };
 
   /**
