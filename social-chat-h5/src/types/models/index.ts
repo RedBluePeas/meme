@@ -8,3 +8,4 @@ export * from './topic';
 export * from './message';
 export * from './contact';
 export * from './group';
+export * from './notification';

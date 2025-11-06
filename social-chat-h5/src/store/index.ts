@@ -13,6 +13,7 @@ import publishReducer from './slices/publishSlice';
 import messageReducer from './slices/messageSlice';
 import contactReducer from './slices/contactSlice';
 import groupReducer from './slices/groupSlice';
+import notificationReducer from './slices/notificationSlice';
 
 /**
  * 创建 Store
@@ -28,6 +29,7 @@ export const store = configureStore({
     message: messageReducer,
     contact: contactReducer,
     group: groupReducer,
+    notification: notificationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
