@@ -11,3 +11,4 @@ export * as messageApi from './message';
 export * as contactApi from './contact';
 export * as groupApi from './group';
 export * as notificationApi from './notification';
+export * as searchApi from './search';

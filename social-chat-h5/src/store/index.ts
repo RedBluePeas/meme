@@ -14,6 +14,7 @@ import messageReducer from './slices/messageSlice';
 import contactReducer from './slices/contactSlice';
 import groupReducer from './slices/groupSlice';
 import notificationReducer from './slices/notificationSlice';
+import searchReducer from './slices/searchSlice';
 
 /**
  * 创建 Store
@@ -30,6 +31,7 @@ export const store = configureStore({
     contact: contactReducer,
     group: groupReducer,
     notification: notificationReducer,
+    search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
