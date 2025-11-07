@@ -5,7 +5,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Button, Textarea } from '@heroui/react';
-import { PaperAirplaneIcon, Image, FaceSmileIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PaperAirplaneIcon, PhotoIcon, FaceSmileIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { SendMessageParams } from '@/types/models';
 
 interface MessageInputProps {
@@ -143,7 +143,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               size="sm"
               onClick={handleImageClick}
             >
-              <Image size={20} />
+              <PhotoIcon className="w-5 h-5" />
             </Button>
           </>
         )}
@@ -157,7 +157,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
             onClick={handleImageClick}
           >
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <Image size={24} className="text-blue-500" />
+              <PhotoIcon className="w-6 h-6 text-blue-500" />
             </div>
             <span className="text-xs text-gray-600">相册</span>
           </button>

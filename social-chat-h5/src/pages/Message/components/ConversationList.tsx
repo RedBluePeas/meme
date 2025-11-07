@@ -6,7 +6,7 @@
 
 import React, { useMemo } from 'react';
 import { Spinner } from '@heroui/react';
-import { MessageCircle } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 import { ConversationItem } from './ConversationItem';
 import { VirtualList } from '@/components/VirtualList';
 import { Conversation } from '@/types/models';
@@ -60,7 +60,7 @@ export const ConversationList: React.FC<ConversationListProps> = ({
       onLoadMore={onLoadMore}
       emptyContent={
         <div className="flex flex-col items-center justify-center text-gray-400">
-          <MessageCircle size={48} className="mb-4 text-gray-300" />
+          <ChatBubbleLeftIcon className="w-12 h-12 mb-4 text-gray-300" />
           <p className="text-sm">暂无会话</p>
           <p className="text-xs mt-1">快去找好友聊天吧~</p>
         </div>

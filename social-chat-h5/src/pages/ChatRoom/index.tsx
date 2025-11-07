@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@heroui/react';
-import { MoreVertical, PhoneIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
+import { EllipsisVerticalIcon, PhoneIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { MessageList, MessageInput } from './components';
 import { useMessage } from '@/hooks/useMessage';
@@ -161,7 +161,7 @@ const ChatRoomPage: React.FC = () => {
             <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly variant="light" size="sm">
-                  <MoreVertical size={18} />
+                  <EllipsisVerticalIcon className="w-[18px] h-[18px]" />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu onAction={handleMenuAction}>

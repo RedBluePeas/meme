@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { Avatar, Card, CardBody, CardFooter, Image } from '@heroui/react';
-import { Heart, MessageCircle, Share2, MoreVertical } from '@heroicons/react/24/outline';
+import { HeartIcon, ChatBubbleLeftIcon, ShareIcon, EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import type { Feed } from '@/types';
 import { SSTimeUtil } from '@/utils';
 
@@ -143,7 +143,7 @@ export const FeedItem: React.FC<FeedItemProps> = ({
           </div>
 
           <button className="text-gray-400 hover:text-gray-600">
-            <MoreVertical size={20} />
+            <EllipsisVerticalIcon className="w-5 h-5" />
           </button>
         </div>
 
@@ -186,8 +186,8 @@ export const FeedItem: React.FC<FeedItemProps> = ({
             }`}
             onClick={() => onLike?.(feed.id, feed.isLiked)}
           >
-            <Heart
-              size={20}
+            <HeartIcon
+              className="w-5 h-5"
               fill={feed.isLiked ? 'currentColor' : 'none'}
             />
             <span className="text-sm">
@@ -200,7 +200,7 @@ export const FeedItem: React.FC<FeedItemProps> = ({
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
             onClick={() => onComment?.(feed.id)}
           >
-            <MessageCircle size={20} />
+            <ChatBubbleLeftIcon className="w-5 h-5" />
             <span className="text-sm">
               {feed.commentCount > 0 ? feed.commentCount : '评论'}
             </span>
@@ -211,7 +211,7 @@ export const FeedItem: React.FC<FeedItemProps> = ({
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
             onClick={() => onShare?.(feed.id)}
           >
-            <Share2 size={20} />
+            <ShareIcon className="w-5 h-5" />
             <span className="text-sm">
               {feed.shareCount > 0 ? feed.shareCount : '分享'}
             </span>
