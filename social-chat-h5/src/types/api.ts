@@ -21,20 +21,23 @@ export interface PaginationParams {
 
 /**
  * 分页响应数据
+ * 与后端 API 返回结构保持一致（使用 items 而不是 list）
  */
 export interface PaginationResponse<T> {
-  list: T[];
+  items: T[];  // 后端使用 items
   total: number;
   page: number;
   pageSize: number;
-  hasMore: boolean;
+  hasMore?: boolean;  // 可选，前端计算
 }
 
 /**
  * 列表响应（无分页）
+ * 兼容旧版本，保留 list 字段
  */
 export interface ListResponse<T> {
-  list: T[];
+  list?: T[];
+  items?: T[];  // 支持两种格式
   total: number;
 }
 

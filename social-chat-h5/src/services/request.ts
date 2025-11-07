@@ -8,8 +8,8 @@ import { ApiResponse, ApiError } from '@/types';
 import { SSStorageUtil } from '@/utils';
 import { SSDialog } from '@/components/SSDialog';
 
-// API 基础路径
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
+// API 基础路径（修改为与后端一致的 /api）
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 // 创建 axios 实例
 const request: AxiosInstance = axios.create({
