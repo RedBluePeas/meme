@@ -8,9 +8,9 @@ import config from './config';
 import logger from './utils/logger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
-// 导入路由（稍后创建）
-// import authRoutes from './routes/auth';
-// import userRoutes from './routes/user';
+// 导入路由
+import authRoutes from './routes/auth';
+import userRoutes from './routes/user';
 // import postRoutes from './routes/post';
 // import messageRoutes from './routes/message';
 
@@ -72,9 +72,9 @@ app.get('/health', (req, res) => {
 // API 路由
 const apiPrefix = config.apiPrefix;
 
-// TODO: 注册路由
-// app.use(`${apiPrefix}/auth`, authRoutes);
-// app.use(`${apiPrefix}/users`, userRoutes);
+// 注册路由
+app.use(`${apiPrefix}/auth`, authRoutes);
+app.use(`${apiPrefix}/users`, userRoutes);
 // app.use(`${apiPrefix}/posts`, postRoutes);
 // app.use(`${apiPrefix}/messages`, messageRoutes);
 
