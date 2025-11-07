@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { Avatar, Card, CardBody, CardFooter, Image } from '@heroui/react';
-import { HeartIcon, ChatBubbleLeftIcon, ShareIcon, EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import { HeartIcon, ChatBubbleLeftIcon, ShareIcon, EllipsisVerticalIcon, MapPinIcon, LightBulbIcon } from '@heroicons/react/24/outline';
 import type { Feed } from '@/types';
 import { SSTimeUtil } from '@/utils';
 
@@ -111,7 +111,7 @@ export const FeedItem: React.FC<FeedItemProps> = ({
 
     return (
       <div className="flex items-center gap-1 mt-2 text-sm text-gray-500">
-        <span>📍</span>
+        <MapPinIcon className="w-4 h-4" />
         <span>{feed.location.name}</span>
       </div>
     );
@@ -168,8 +168,9 @@ export const FeedItem: React.FC<FeedItemProps> = ({
 
         {/* 推荐理由 */}
         {feed.recommendReason && (
-          <div className="mt-3 text-xs text-gray-500 bg-gray-50 rounded-lg p-2">
-            💡 {feed.recommendReason}
+          <div className="mt-3 text-xs text-gray-500 bg-gray-50 rounded-lg p-2 flex items-center gap-1">
+            <LightBulbIcon className="w-4 h-4 flex-shrink-0" />
+            <span>{feed.recommendReason}</span>
           </div>
         )}
       </CardBody>

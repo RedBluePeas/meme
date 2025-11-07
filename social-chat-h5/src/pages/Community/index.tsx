@@ -6,6 +6,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, Tab, Chip } from '@heroui/react';
+import { FireIcon } from '@heroicons/react/24/solid';
 import { MainLayout } from '@/components/Layout';
 import { PullRefresh } from '@/components/common';
 import { TopicList } from './components';
@@ -107,7 +108,7 @@ const CommunityPage: React.FC = () => {
                   <span>热门</span>
                   {hotTopics.length > 0 && (
                     <Chip size="sm" color="danger" variant="flat">
-                      🔥
+                      <FireIcon className="w-3.5 h-3.5" />
                     </Chip>
                   )}
                 </div>

@@ -5,6 +5,20 @@
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@heroui/react';
+import {
+  HomeIcon,
+  UsersIcon,
+  PlusCircleIcon,
+  ChatBubbleLeftRightIcon,
+  UserIcon
+} from '@heroicons/react/24/outline';
+import {
+  HomeIcon as HomeIconSolid,
+  UsersIcon as UsersIconSolid,
+  PlusCircleIcon as PlusCircleIconSolid,
+  ChatBubbleLeftRightIcon as ChatBubbleLeftRightIconSolid,
+  UserIcon as UserIconSolid
+} from '@heroicons/react/24/solid';
 
 /**
  * 导航项配置接口
@@ -12,8 +26,8 @@ import { Button } from '@heroui/react';
 interface TabItem {
   key: string;
   label: string;
-  icon: string;
-  activeIcon: string;
+  icon: React.ReactNode;
+  activeIcon: React.ReactNode;
   path: string;
 }
 
@@ -24,36 +38,36 @@ const TAB_ITEMS: TabItem[] = [
   {
     key: 'home',
     label: '首页',
-    icon: '🏠',
-    activeIcon: '🏡',
+    icon: <HomeIcon className="w-6 h-6" />,
+    activeIcon: <HomeIconSolid className="w-6 h-6" />,
     path: '/home'
   },
   {
     key: 'community',
     label: '社区',
-    icon: '👥',
-    activeIcon: '👫',
+    icon: <UsersIcon className="w-6 h-6" />,
+    activeIcon: <UsersIconSolid className="w-6 h-6" />,
     path: '/community'
   },
   {
     key: 'publish',
     label: '发布',
-    icon: '➕',
-    activeIcon: '✨',
+    icon: <PlusCircleIcon className="w-6 h-6" />,
+    activeIcon: <PlusCircleIconSolid className="w-6 h-6" />,
     path: '/publish'
   },
   {
     key: 'message',
     label: '消息',
-    icon: '💬',
-    activeIcon: '💭',
+    icon: <ChatBubbleLeftRightIcon className="w-6 h-6" />,
+    activeIcon: <ChatBubbleLeftRightIconSolid className="w-6 h-6" />,
     path: '/message'
   },
   {
     key: 'profile',
     label: '我的',
-    icon: '👤',
-    activeIcon: '👨',
+    icon: <UserIcon className="w-6 h-6" />,
+    activeIcon: <UserIconSolid className="w-6 h-6" />,
     path: '/profile'
   }
 ];
@@ -99,9 +113,9 @@ export const TabBar: React.FC = () => {
               onPress={() => handleTabClick(item)}
             >
               <div className="flex flex-col items-center justify-center gap-0.5">
-                <span className="text-xl leading-none">
+                <div className={active ? 'text-primary' : 'text-gray-600 dark:text-gray-400'}>
                   {active ? item.activeIcon : item.icon}
-                </span>
+                </div>
                 <span
                   className={`text-xs leading-none transition-colors ${
                     active

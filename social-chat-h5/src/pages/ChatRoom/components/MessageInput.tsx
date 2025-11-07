@@ -5,7 +5,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Button, Textarea } from '@heroui/react';
-import { PaperAirplaneIcon, PhotoIcon, FaceSmileIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PaperAirplaneIcon, PhotoIcon, FaceSmileIcon, PlusIcon, CameraIcon, MicrophoneIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { SendMessageParams } from '@/types/models';
 
 interface MessageInputProps {
@@ -164,21 +164,21 @@ export const MessageInput: React.FC<MessageInputProps> = ({
 
           <button className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <span className="text-green-500 text-2xl">📷</span>
+              <CameraIcon className="w-6 h-6 text-green-500" />
             </div>
             <span className="text-xs text-gray-600">拍照</span>
           </button>
 
           <button className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-              <span className="text-orange-500 text-2xl">🎤</span>
+              <MicrophoneIcon className="w-6 h-6 text-orange-500" />
             </div>
             <span className="text-xs text-gray-600">语音</span>
           </button>
 
           <button className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-              <span className="text-purple-500 text-2xl">📁</span>
+              <DocumentIcon className="w-6 h-6 text-purple-500" />
             </div>
             <span className="text-xs text-gray-600">文件</span>
           </button>
