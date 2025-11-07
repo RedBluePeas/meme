@@ -16,6 +16,7 @@ import commentRoutes from './routes/comment';
 import friendRoutes from './routes/friend';
 import notificationRoutes from './routes/notification';
 import messageRoutes from './routes/message';
+import swaggerRoutes from './routes/swagger';
 
 const app: Application = express();
 
@@ -71,6 +72,9 @@ app.get('/health', (req, res) => {
     },
   });
 });
+
+// API 文档
+app.use('/api-docs', swaggerRoutes);
 
 // API 路由
 const apiPrefix = config.apiPrefix;

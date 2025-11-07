@@ -1,0 +1,124 @@
+version: '3.8'
+
+# 开发环境 Docker Compose 配置
+# 用法: docker-compose -f docker-compose.dev.yml up
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: social-chat-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: social_chat_dev
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - social-chat-dev-network
+
+  # MongoDB 数据库
+  mongodb:
+    image: mongo:7
+    container_name: social-chat-mongodb-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: social_chat_dev
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_dev_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - social-chat-dev-network
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: social-chat-redis-dev
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_dev_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - social-chat-dev-network
+
+  # 后端应用（开发模式 with hot reload）
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: social-chat-backend-dev
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      API_PREFIX: /api
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: social_chat_dev
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/social_chat_dev?authSource=admin
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ''
+      REDIS_DB: 0
+      JWT_SECRET: dev-secret-key
+      JWT_ACCESS_EXPIRATION: 15m
+      JWT_REFRESH_EXPIRATION: 7d
+      CORS_ORIGIN: http://localhost:3000
+      CORS_CREDENTIALS: 'true'
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 1000
+      WS_PING_INTERVAL: 25000
+      WS_PING_TIMEOUT: 20000
+    volumes:
+      # 挂载源代码以支持热重载
+      - ./src:/app/src
+      - ./migrations:/app/migrations
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - social-chat-dev-network
+
+networks:
+  social-chat-dev-network:
+    driver: bridge
+
+volumes:
+  postgres_dev_data:
+    driver: local
+  mongodb_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
