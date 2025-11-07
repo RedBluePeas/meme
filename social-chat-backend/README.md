@@ -104,6 +104,13 @@ social-chat-backend/
 
 启动服务后访问 Swagger 文档：
 - 开发环境: `http://localhost:3000/api-docs`
+- JSON 规范: `http://localhost:3000/api-docs/swagger.json`
+
+### ⚠️ 重要：API 文档同步更新规则
+
+**任何对 API 的改动（新增、修改、删除）都必须同步更新 Swagger 文档！**
+
+详细的开发规范请参考：[CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## 可用脚本
 
@@ -140,6 +147,18 @@ npm run seed:run         # 运行种子数据
 
 ### Docker 部署
 
+详细的 Docker 部署文档请参考：[DOCKER.md](./DOCKER.md)
+
+```bash
+# 生产环境
+docker-compose up -d
+
+# 开发环境
+docker-compose -f docker-compose.dev.yml up -d
+```
+
+### 手动部署
+
 ```bash
 # 构建镜像
 docker build -t social-chat-backend .
@@ -148,11 +167,64 @@ docker build -t social-chat-backend .
 docker run -p 3000:3000 --env-file .env social-chat-backend
 ```
 
-### Docker Compose
+## 开发规范
+
+### 必读文档
+
+在开始开发前，请务必阅读以下文档：
+
+📖 **[CONTRIBUTING.md](./CONTRIBUTING.md)** - 完整的开发规范文档
+
+包含：
+- ⚠️ **API 文档同步更新规则**（重要！）
+- 代码提交规范
+- 数据库变更规范
+- 测试规范
+- 代码审查清单
+
+### 核心规则
+
+1. **API 改动必须同步更新文档**
+   - 任何新增、修改、删除 API 接口
+   - 必须同时更新 `src/config/swagger.ts`
+   - 在 Swagger UI 中验证正确性
+
+2. **代码必须通过测试**
+   - 新功能必须编写测试
+   - 测试覆盖率 ≥ 80%
+   - 提交前运行 `npm test`
+
+3. **遵循 Commit Message 规范**
+   - 使用约定式提交格式
+   - 示例：`feat(user): 添加用户验证功能`
+
+4. **数据库变更必须可回滚**
+   - 迁移文件必须实现 `up` 和 `down` 方法
+   - 测试环境验证后再应用到生产
+
+## 测试
+
+### 运行测试
 
 ```bash
-docker-compose up -d
+# 运行所有测试
+npm test
+
+# 监听模式
+npm run test:watch
+
+# 生成覆盖率报告
+npm run test:coverage
 ```
+
+测试文档：[tests/README.md](./tests/README.md)
+
+## 文档索引
+
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)** - 开发规范（必读）
+- **[DOCKER.md](./DOCKER.md)** - Docker 部署指南
+- **[tests/README.md](./tests/README.md)** - 测试文档
+- **API 文档**: http://localhost:3000/api-docs
 
 ## 许可证
 
