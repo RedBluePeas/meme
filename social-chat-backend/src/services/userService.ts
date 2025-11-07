@@ -1,12 +1,20 @@
 import { db } from '../config/db';
 import { User } from '../types';
 import { AppError } from '../middleware/errorHandler';
+import { CacheService, CACHE_KEYS, CACHE_TTL } from '../utils/cache';
 
 export class UserService {
   /**
-   * 获取用户信息
+   * 获取用户信息（带缓存）
    */
   static async getUserById(userId: string): Promise<Partial<User>> {
+    // 尝试从缓存获取
+    const cached = await CacheService.getUserInfo(userId);
+    if (cached) {
+      return cached;
+    }
+
+    // 从数据库查询
     const user = await db('users')
       .where('id', userId)
       .select(
@@ -32,6 +40,9 @@ export class UserService {
     if (!user) {
       throw new AppError(404, '用户不存在');
     }
+
+    // 缓存用户信息
+    await CacheService.setUserInfo(userId, user);
 
     return user;
   }
@@ -93,6 +104,9 @@ export class UserService {
         ...data,
         updated_at: db.fn.now(),
       });
+
+    // 清除用户缓存
+    await CacheService.deleteUserInfo(userId);
 
     // 返回更新后的用户信息
     return this.getUserById(userId);

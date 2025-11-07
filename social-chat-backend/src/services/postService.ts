@@ -1,6 +1,7 @@
 import { db } from '../config/db';
 import { Post } from '../types';
 import { AppError } from '../middleware/errorHandler';
+import { CacheService, CACHE_KEYS, CACHE_TTL } from '../utils/cache';
 
 export class PostService {
   /**
@@ -68,6 +69,11 @@ export class PostService {
       if (post.images) {
         post.images = JSON.parse(post.images);
       }
+
+      // 清除相关缓存（异步执行，不阻塞响应）
+      CacheService.clearUserCache(userId).catch((err) => {
+        console.error('清除用户缓存失败', err);
+      });
 
       return post;
     });
