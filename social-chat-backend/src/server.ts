@@ -4,6 +4,7 @@ import app from './app';
 import config from './config';
 import logger from './utils/logger';
 import { testPostgresConnection, testMongoConnection, testRedisConnection, closeAllConnections } from './config/db';
+import { initializeMessageHandler } from './websocket/messageHandler';
 
 // 创建 HTTP 服务器
 const server = http.createServer(app);
@@ -18,14 +19,8 @@ const io = new SocketIOServer(server, {
   pingTimeout: config.websocket.pingTimeout,
 });
 
-// WebSocket 连接处理（稍后实现）
-io.on('connection', (socket) => {
-  logger.info('WebSocket 客户端已连接', { id: socket.id });
-
-  socket.on('disconnect', () => {
-    logger.info('WebSocket 客户端已断开', { id: socket.id });
-  });
-});
+// 初始化 WebSocket 消息处理
+initializeMessageHandler(io);
 
 // 导出 io 实例供其他模块使用
 export { io };
