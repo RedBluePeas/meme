@@ -3,17 +3,11 @@
  */
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Input } from '@heroui/react';
 import { useAuth } from '@/hooks/useAuth';
-import { useAppDispatch } from '@/store';
-import { setMockAuth } from '@/store/slices/authSlice';
-import { SSValidateUtil } from '@/utils';
-import { SSDialog } from '@/components/SSDialog';
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { login, loading } = useAuth();
 
   const [form, setForm] = useState({
@@ -35,11 +29,11 @@ const LoginPage: React.FC = () => {
       password: '',
     };
 
-    // 验证用户名
+    // 验证用户名/邮箱/手机号
     if (!form.username.trim()) {
-      newErrors.username = '请输入用户名';
-    } else if (form.username.length < 3 || form.username.length > 20) {
-      newErrors.username = '用户名长度为 3-20 个字符';
+      newErrors.username = '请输入用户名、邮箱或手机号';
+    } else if (form.username.trim().length < 3) {
+      newErrors.username = '输入内容过短';
     }
 
     // 验证密码
@@ -63,44 +57,12 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    // TODO: Mock 登录 - 开发阶段使用 Mock 数据
-    // 等后端 API 开发完成后，取消注释后面的正式登录逻辑
-
-    // Mock 用户数据
-    const mockUser = {
-      id: 'mock-user-id',
-      username: form.username.trim(),
-      nickname: form.username.trim(),
-      avatar: 'https://i.pravatar.cc/150?img=1',
-      email: `${form.username}@example.com`,
-      phone: '',
-      bio: '这是一个测试用户',
-      followersCount: 100,
-      followingCount: 50,
-      postsCount: 20,
-    };
-
-    // 设置 Mock 登录状态
-    dispatch(setMockAuth({
-      user: mockUser,
-      token: 'mock-token-' + Date.now(),
-    }));
-
-    SSDialog.toast.success('登录成功');
-    setTimeout(() => {
-      navigate('/home');
-    }, 500);
-    return;
-
-    // 正式登录逻辑（暂时注释）
-    // const success = await login({
-    //   identifier: form.username.trim(), // 可以是用户名、邮箱或手机号
-    //   password: form.password,
-    // });
-    //
-    // if (success) {
-    //   // 登录成功会在 useAuth 中跳转
-    // }
+    // 调用真实 API 登录
+    await login({
+      identifier: form.username.trim(), // 可以是用户名、邮箱或手机号
+      password: form.password,
+    });
+    // 登录成功会在 useAuth hook 中跳转到 /home
   };
 
   /**
@@ -140,11 +102,11 @@ const LoginPage: React.FC = () => {
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* 用户名输入 */}
+            {/* 用户名/邮箱/手机号输入 */}
             <Input
               type="text"
-              label="用户名"
-              placeholder="请输入用户名"
+              label="账号"
+              placeholder="用户名 / 邮箱 / 手机号"
               value={form.username}
               onChange={(e) => handleChange('username', e.target.value)}
               isInvalid={!!errors.username}
