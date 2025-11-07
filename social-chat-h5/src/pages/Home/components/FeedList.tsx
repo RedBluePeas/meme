@@ -48,10 +48,8 @@ export const FeedList: React.FC<FeedListProps> = ({
     return (
       <Empty
         description="暂无内容"
-        action={{
-          text: '刷新试试',
-          onClick: () => window.location.reload(),
-        }}
+        actionText="刷新试试"
+        onAction={() => window.location.reload()}
       />
     );
   }

@@ -44,10 +44,8 @@ export const TopicList: React.FC<TopicListProps> = ({
     return (
       <Empty
         description="暂无话题"
-        action={{
-          text: '刷新试试',
-          onClick: () => window.location.reload(),
-        }}
+        actionText="刷新试试"
+        onAction={() => window.location.reload()}
       />
     );
   }

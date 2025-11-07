@@ -26,12 +26,12 @@ export class SSDictUtil {
    * 消息类型字典
    */
   static readonly MESSAGE_TYPE = {
-    TEXT: { value: 'text', label: '文字消息', icon: '💬' },
-    IMAGE: { value: 'image', label: '图片消息', icon: '🖼️' },
-    VIDEO: { value: 'video', label: '视频消息', icon: '🎬' },
-    AUDIO: { value: 'audio', label: '语音消息', icon: '🎤' },
-    FILE: { value: 'file', label: '文件消息', icon: '📎' },
-    LOCATION: { value: 'location', label: '位置消息', icon: '📍' }
+    TEXT: { value: 'text', label: '文字消息', icon: 'ChatBubbleLeftIcon' },
+    IMAGE: { value: 'image', label: '图片消息', icon: 'PhotoIcon' },
+    VIDEO: { value: 'video', label: '视频消息', icon: 'VideoCameraIcon' },
+    AUDIO: { value: 'audio', label: '语音消息', icon: 'MicrophoneIcon' },
+    FILE: { value: 'file', label: '文件消息', icon: 'PaperClipIcon' },
+    LOCATION: { value: 'location', label: '位置消息', icon: 'MapPinIcon' }
   };
 
   /**
@@ -49,29 +49,29 @@ export class SSDictUtil {
    * 动态可见性字典
    */
   static readonly POST_VISIBILITY = {
-    PUBLIC: { value: 'public', label: '公开', icon: '🌐', desc: '所有人可见' },
-    FRIENDS: { value: 'friends', label: '好友可见', icon: '👥', desc: '仅好友可见' },
-    PRIVATE: { value: 'private', label: '私密', icon: '🔒', desc: '仅自己可见' }
+    PUBLIC: { value: 'public', label: '公开', icon: 'GlobeAltIcon', desc: '所有人可见' },
+    FRIENDS: { value: 'friends', label: '好友可见', icon: 'UsersIcon', desc: '仅好友可见' },
+    PRIVATE: { value: 'private', label: '私密', icon: 'LockClosedIcon', desc: '仅自己可见' }
   };
 
   /**
    * 性别字典
    */
   static readonly GENDER = {
-    MALE: { value: 'male', label: '男', icon: '♂️' },
-    FEMALE: { value: 'female', label: '女', icon: '♀️' },
-    OTHER: { value: 'other', label: '其他', icon: '⚧' }
+    MALE: { value: 'male', label: '男', icon: 'UserIcon' },
+    FEMALE: { value: 'female', label: '女', icon: 'UserIcon' },
+    OTHER: { value: 'other', label: '其他', icon: 'UserIcon' }
   };
 
   /**
    * 通知类型字典
    */
   static readonly NOTIFICATION_TYPE = {
-    MESSAGE: { value: 'message', label: '消息通知', icon: '💬' },
-    FRIEND_REQUEST: { value: 'friend_request', label: '好友请求', icon: '👥' },
-    LIKE: { value: 'like', label: '点赞通知', icon: '❤️' },
-    COMMENT: { value: 'comment', label: '评论通知', icon: '💭' },
-    SYSTEM: { value: 'system', label: '系统通知', icon: '📢' }
+    MESSAGE: { value: 'message', label: '消息通知', icon: 'ChatBubbleLeftIcon' },
+    FRIEND_REQUEST: { value: 'friend_request', label: '好友请求', icon: 'UsersIcon' },
+    LIKE: { value: 'like', label: '点赞通知', icon: 'HeartIcon' },
+    COMMENT: { value: 'comment', label: '评论通知', icon: 'ChatBubbleLeftEllipsisIcon' },
+    SYSTEM: { value: 'system', label: '系统通知', icon: 'BellAlertIcon' }
   };
 
   /**
@@ -90,9 +90,9 @@ export class SSDictUtil {
    * 主题模式字典
    */
   static readonly THEME_MODE = {
-    LIGHT: { value: 'light', label: '浅色模式', icon: '☀️' },
-    DARK: { value: 'dark', label: '深色模式', icon: '🌙' },
-    AUTO: { value: 'auto', label: '跟随系统', icon: '🔄' }
+    LIGHT: { value: 'light', label: '浅色模式', icon: 'SunIcon' },
+    DARK: { value: 'dark', label: '深色模式', icon: 'MoonIcon' },
+    AUTO: { value: 'auto', label: '跟随系统', icon: 'ComputerDesktopIcon' }
   };
 
   /**
