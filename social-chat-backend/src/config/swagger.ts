@@ -143,6 +143,39 @@ export const swaggerDocument = {
           },
         },
       },
+      Comment: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid',
+          },
+          postId: {
+            type: 'string',
+            format: 'uuid',
+          },
+          userId: {
+            type: 'string',
+            format: 'uuid',
+          },
+          content: {
+            type: 'string',
+          },
+          parentId: {
+            type: 'string',
+            format: 'uuid',
+            nullable: true,
+          },
+          likesCount: {
+            type: 'integer',
+            example: 0,
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+          },
+        },
+      },
       Message: {
         type: 'object',
         properties: {
@@ -391,6 +424,135 @@ export const swaggerDocument = {
         },
       },
     },
+    '/auth/refresh-token': {
+      post: {
+        tags: ['Auth'],
+        summary: '刷新访问令牌',
+        description: '使用刷新令牌获取新的访问令牌',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['refreshToken'],
+                properties: {
+                  refreshToken: {
+                    type: 'string',
+                    description: '刷新令牌',
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: '刷新成功',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    code: {
+                      type: 'integer',
+                      example: 200,
+                    },
+                    data: {
+                      type: 'object',
+                      properties: {
+                        accessToken: {
+                          type: 'string',
+                        },
+                        refreshToken: {
+                          type: 'string',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+        },
+      },
+    },
+    '/auth/me': {
+      get: {
+        tags: ['Auth'],
+        summary: '获取当前用户信息',
+        description: '获取当前登录用户的详细信息',
+        security: [{ bearerAuth: [] }],
+        responses: {
+          '200': {
+            description: '成功',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    code: {
+                      type: 'integer',
+                      example: 200,
+                    },
+                    data: {
+                      $ref: '#/components/schemas/User',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+        },
+      },
+    },
+    '/auth/change-password': {
+      post: {
+        tags: ['Auth'],
+        summary: '修改密码',
+        description: '修改当前用户密码',
+        security: [{ bearerAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['oldPassword', 'newPassword'],
+                properties: {
+                  oldPassword: {
+                    type: 'string',
+                    description: '旧密码',
+                  },
+                  newPassword: {
+                    type: 'string',
+                    minLength: 6,
+                    description: '新密码',
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: '修改成功',
+          },
+          '400': {
+            $ref: '#/components/responses/ValidationError',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+        },
+      },
+    },
     '/users/{userId}': {
       get: {
         tags: ['Users'],
@@ -554,6 +716,521 @@ export const swaggerDocument = {
                 },
               },
             },
+          },
+        },
+      },
+    },
+    '/posts/{postId}': {
+      get: {
+        tags: ['Posts'],
+        summary: '获取动态详情',
+        description: '根据动态ID获取详细信息',
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '成功',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    code: {
+                      type: 'integer',
+                      example: 200,
+                    },
+                    data: {
+                      $ref: '#/components/schemas/Post',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+      put: {
+        tags: ['Posts'],
+        summary: '更新动态',
+        description: '更新已发布的动态内容',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  content: {
+                    type: 'string',
+                  },
+                  images: {
+                    type: 'array',
+                    items: {
+                      type: 'string',
+                    },
+                  },
+                  visibility: {
+                    type: 'string',
+                    enum: ['public', 'friends', 'private'],
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: '更新成功',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    code: {
+                      type: 'integer',
+                      example: 200,
+                    },
+                    data: {
+                      $ref: '#/components/schemas/Post',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+      delete: {
+        tags: ['Posts'],
+        summary: '删除动态',
+        description: '删除指定的动态',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '删除成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+    },
+    '/posts/{postId}/like': {
+      post: {
+        tags: ['Posts'],
+        summary: '点赞动态',
+        description: '对指定动态进行点赞',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '点赞成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+      delete: {
+        tags: ['Posts'],
+        summary: '取消点赞',
+        description: '取消对指定动态的点赞',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '取消成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+    },
+    '/posts/{postId}/favorite': {
+      post: {
+        tags: ['Posts'],
+        summary: '收藏动态',
+        description: '收藏指定动态',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '收藏成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+      delete: {
+        tags: ['Posts'],
+        summary: '取消收藏',
+        description: '取消收藏指定动态',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '取消成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+    },
+    '/posts/{postId}/share': {
+      post: {
+        tags: ['Posts'],
+        summary: '分享动态',
+        description: '分享指定动态',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '分享成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+    },
+    '/posts/{postId}/comments': {
+      get: {
+        tags: ['Comments'],
+        summary: '获取动态评论列表',
+        description: '获取指定动态的所有评论',
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+          {
+            name: 'page',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              default: 1,
+            },
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              default: 20,
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '成功',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    code: {
+                      type: 'integer',
+                      example: 200,
+                    },
+                    data: {
+                      type: 'object',
+                      properties: {
+                        items: {
+                          type: 'array',
+                          items: {
+                            $ref: '#/components/schemas/Comment',
+                          },
+                        },
+                        total: {
+                          type: 'integer',
+                        },
+                        page: {
+                          type: 'integer',
+                        },
+                        pageSize: {
+                          type: 'integer',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+      post: {
+        tags: ['Comments'],
+        summary: '创建评论',
+        description: '对指定动态发表评论',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'postId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['content'],
+                properties: {
+                  content: {
+                    type: 'string',
+                    minLength: 1,
+                    maxLength: 500,
+                  },
+                  parentId: {
+                    type: 'string',
+                    format: 'uuid',
+                    description: '父评论ID（用于回复评论）',
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '201': {
+            description: '创建成功',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    code: {
+                      type: 'integer',
+                      example: 201,
+                    },
+                    data: {
+                      $ref: '#/components/schemas/Comment',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+    },
+    '/comments/{commentId}': {
+      delete: {
+        tags: ['Comments'],
+        summary: '删除评论',
+        description: '删除指定评论',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'commentId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '删除成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+    },
+    '/comments/{commentId}/like': {
+      post: {
+        tags: ['Comments'],
+        summary: '点赞评论',
+        description: '对指定评论进行点赞',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'commentId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '点赞成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
+          },
+        },
+      },
+      delete: {
+        tags: ['Comments'],
+        summary: '取消点赞评论',
+        description: '取消对指定评论的点赞',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: 'commentId',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string',
+              format: 'uuid',
+            },
+          },
+        ],
+        responses: {
+          '200': {
+            description: '取消成功',
+          },
+          '401': {
+            $ref: '#/components/responses/UnauthorizedError',
+          },
+          '404': {
+            $ref: '#/components/responses/NotFoundError',
           },
         },
       },

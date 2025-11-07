@@ -33,13 +33,11 @@ export function logout(): Promise<void> {
   return post<void>('/auth/logout');
 }
 
-// ==================== 以下接口后端暂未实现 ====================
-// TODO: 等待后端实现以下接口
+// ==================== 后端已实现的接口（已添加到 Swagger 文档） ====================
 
 /**
  * 刷新 token
  * POST /api/auth/refresh-token
- * ⚠️ 注意：后端接口路径可能是 /auth/refresh-token
  */
 export function refreshToken(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
   return post<{ accessToken: string; refreshToken: string }>('/auth/refresh-token', { refreshToken });
@@ -48,19 +46,14 @@ export function refreshToken(refreshToken: string): Promise<{ accessToken: strin
 /**
  * 获取当前用户信息
  * GET /api/auth/me
- * ⚠️ 后端暂未实现此接口，建议使用 GET /api/users/{userId}
  */
 export function getCurrentUser(): Promise<User> {
-  // 临时方案：如果后端没有 /auth/me，可以使用用户ID查询
-  // const userId = SSStorageUtil.get('user_id');
-  // return get<User>(`/users/${userId}`);
   return get<User>('/auth/me');
 }
 
 /**
  * 修改密码
  * POST /api/auth/change-password
- * ⚠️ 后端暂未实现此接口
  */
 export function changePassword(params: {
   oldPassword: string;

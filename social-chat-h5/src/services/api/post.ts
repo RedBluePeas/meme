@@ -38,13 +38,11 @@ export function getFeeds(
   return get<PaginationResponse<Feed>>('/posts', params);
 }
 
-// ==================== 后端暂未实现的接口 ====================
-// TODO: 等待后端实现以下接口
+// ==================== 后端已实现的接口（已添加到 Swagger 文档） ====================
 
 /**
  * 获取动态详情
  * GET /api/posts/{postId}
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function getPostDetail(postId: string): Promise<Post> {
   return get<Post>(`/posts/${postId}`);
@@ -53,7 +51,6 @@ export function getPostDetail(postId: string): Promise<Post> {
 /**
  * 更新动态
  * PUT /api/posts/{postId}
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function updatePost(
   postId: string,
@@ -65,7 +62,6 @@ export function updatePost(
 /**
  * 删除动态
  * DELETE /api/posts/{postId}
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function deletePost(postId: string): Promise<void> {
   return del<void>(`/posts/${postId}`);
@@ -74,7 +70,6 @@ export function deletePost(postId: string): Promise<void> {
 /**
  * 点赞动态
  * POST /api/posts/{postId}/like
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function likePost(postId: string): Promise<void> {
   return post<void>(`/posts/${postId}/like`);
@@ -83,7 +78,6 @@ export function likePost(postId: string): Promise<void> {
 /**
  * 取消点赞动态
  * DELETE /api/posts/{postId}/like
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function unlikePost(postId: string): Promise<void> {
   return del<void>(`/posts/${postId}/like`);
@@ -92,7 +86,6 @@ export function unlikePost(postId: string): Promise<void> {
 /**
  * 收藏动态
  * POST /api/posts/{postId}/favorite
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function favoritePost(postId: string): Promise<void> {
   return post<void>(`/posts/${postId}/favorite`);
@@ -101,7 +94,6 @@ export function favoritePost(postId: string): Promise<void> {
 /**
  * 取消收藏动态
  * DELETE /api/posts/{postId}/favorite
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function unfavoritePost(postId: string): Promise<void> {
   return del<void>(`/posts/${postId}/favorite`);
@@ -110,7 +102,6 @@ export function unfavoritePost(postId: string): Promise<void> {
 /**
  * 分享动态
  * POST /api/posts/{postId}/share
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function sharePost(postId: string): Promise<void> {
   return post<void>(`/posts/${postId}/share`);
@@ -119,7 +110,6 @@ export function sharePost(postId: string): Promise<void> {
 /**
  * 获取动态的评论列表
  * GET /api/posts/{postId}/comments
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function getPostComments(
   postId: string,
@@ -130,17 +120,15 @@ export function getPostComments(
 
 /**
  * 创建评论
- * POST /api/comments
- * ⚠️ 后端暂未在 Swagger 文档中定义
+ * POST /api/posts/{postId}/comments
  */
 export function createComment(params: CreateCommentParams): Promise<Comment> {
-  return post<Comment>('/comments', params);
+  return post<Comment>(`/posts/${params.postId}/comments`, params);
 }
 
 /**
  * 删除评论
  * DELETE /api/comments/{commentId}
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function deleteComment(commentId: string): Promise<void> {
   return del<void>(`/comments/${commentId}`);
@@ -149,7 +137,6 @@ export function deleteComment(commentId: string): Promise<void> {
 /**
  * 点赞评论
  * POST /api/comments/{commentId}/like
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function likeComment(commentId: string): Promise<void> {
   return post<void>(`/comments/${commentId}/like`);
@@ -158,7 +145,6 @@ export function likeComment(commentId: string): Promise<void> {
 /**
  * 取消点赞评论
  * DELETE /api/comments/{commentId}/like
- * ⚠️ 后端暂未在 Swagger 文档中定义
  */
 export function unlikeComment(commentId: string): Promise<void> {
   return del<void>(`/comments/${commentId}/like`);
