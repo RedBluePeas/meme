@@ -11,7 +11,8 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 // 导入路由
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
-// import postRoutes from './routes/post';
+import postRoutes from './routes/post';
+import commentRoutes from './routes/comment';
 // import messageRoutes from './routes/message';
 
 const app: Application = express();
@@ -75,7 +76,8 @@ const apiPrefix = config.apiPrefix;
 // 注册路由
 app.use(`${apiPrefix}/auth`, authRoutes);
 app.use(`${apiPrefix}/users`, userRoutes);
-// app.use(`${apiPrefix}/posts`, postRoutes);
+app.use(`${apiPrefix}/posts`, postRoutes);
+app.use(`${apiPrefix}`, commentRoutes); // 评论路由包含 /posts/:postId/comments 等
 // app.use(`${apiPrefix}/messages`, messageRoutes);
 
 // 临时测试路由
