@@ -35,9 +35,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             {user.nickname}
           </h2>
           <p className="text-sm text-white/80 mb-2">ID: {user.username}</p>
-          {user.signature && (
+          {user.bio && (
             <p className="text-sm text-white/90 line-clamp-2">
-              {user.signature}
+              {user.bio}
             </p>
           )}
         </div>

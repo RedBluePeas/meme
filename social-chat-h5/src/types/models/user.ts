@@ -76,7 +76,7 @@ export interface LoginResponse {
 export interface UpdateProfileParams {
   nickname?: string;
   avatar?: string;
-  signature?: string;
+  bio?: string;  // 后端使用 bio 而不是 signature
   gender?: 'male' | 'female' | 'unknown';
   birthday?: string;
   backgroundImage?: string;

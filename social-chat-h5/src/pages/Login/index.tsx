@@ -94,7 +94,7 @@ const LoginPage: React.FC = () => {
 
     // 正式登录逻辑（暂时注释）
     // const success = await login({
-    //   username: form.username.trim(),
+    //   identifier: form.username.trim(), // 可以是用户名、邮箱或手机号
     //   password: form.password,
     // });
     //

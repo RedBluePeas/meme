@@ -19,7 +19,7 @@ const EditProfilePage: React.FC = () => {
   const { userInfo } = useAppSelector((state) => state.user);
 
   const [nickname, setNickname] = useState(userInfo?.nickname || '');
-  const [signature, setSignature] = useState((userInfo as any)?.signature || '');
+  const [signature, setSignature] = useState(userInfo?.bio || '');
   const [avatar, setAvatar] = useState(userInfo?.avatar || '');
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -27,7 +27,7 @@ const EditProfilePage: React.FC = () => {
   useEffect(() => {
     if (userInfo) {
       setNickname(userInfo.nickname);
-      setSignature((userInfo as any).signature || '');
+      setSignature(userInfo.bio || '');
       setAvatar(userInfo.avatar || '');
     }
   }, [userInfo]);

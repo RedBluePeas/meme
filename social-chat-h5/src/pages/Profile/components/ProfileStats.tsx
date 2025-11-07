@@ -38,7 +38,7 @@ export const ProfileStats: React.FC<ProfileStatsProps> = ({
         onClick={onFollowers}
       >
         <span className="text-xl font-bold text-gray-900">
-          {user.followerCount || 0}
+          {user.followersCount || 0}
         </span>
         <span className="text-sm text-gray-500 mt-1">粉丝</span>
       </button>

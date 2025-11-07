@@ -252,10 +252,10 @@ const communitySlice = createSlice({
       .addCase(fetchTopicsAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.refreshing = false;
-        state.topics = action.payload.list;
+        state.topics = action.payload.items;
         state.total = action.payload.total;
         state.page = action.payload.page;
-        state.hasMore = action.payload.hasMore;
+        state.hasMore = action.payload.hasMore || false;
       })
       .addCase(fetchTopicsAsync.rejected, (state, action) => {
         state.loading = false;
@@ -270,9 +270,9 @@ const communitySlice = createSlice({
       })
       .addCase(loadMoreTopicsAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.topics = [...state.topics, ...action.payload.list];
+        state.topics = [...state.topics, ...action.payload.items];
         state.page = action.payload.page;
-        state.hasMore = action.payload.hasMore;
+        state.hasMore = action.payload.hasMore || false;
       })
       .addCase(loadMoreTopicsAsync.rejected, (state, action) => {
         state.loading = false;
@@ -314,9 +314,9 @@ const communitySlice = createSlice({
         state.loading = false;
         const { topicId, data } = action.payload;
         state.topicPosts[topicId] = {
-          posts: data.list,
+          posts: data.items,
           page: data.page,
-          hasMore: data.hasMore,
+          hasMore: data.hasMore || false,
         };
       })
       .addCase(fetchTopicPostsAsync.rejected, (state, action) => {

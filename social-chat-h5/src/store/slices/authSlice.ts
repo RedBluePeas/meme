@@ -112,6 +112,7 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       SSStorageUtil.remove('auth_token');
+      SSStorageUtil.remove('refresh_token');
       SSStorageUtil.remove('user_info');
     },
 
@@ -139,12 +140,13 @@ const authSlice = createSlice({
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.accessToken;
         state.isAuthenticated = true;
         state.error = null;
 
         // 保存到本地存储
-        SSStorageUtil.set('auth_token', action.payload.token);
+        SSStorageUtil.set('auth_token', action.payload.accessToken);
+        SSStorageUtil.set('refresh_token', action.payload.refreshToken);
         SSStorageUtil.set('user_info', action.payload.user);
       })
       .addCase(loginAsync.rejected, (state, action) => {
@@ -161,12 +163,13 @@ const authSlice = createSlice({
       .addCase(registerAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.accessToken;
         state.isAuthenticated = true;
         state.error = null;
 
         // 保存到本地存储
-        SSStorageUtil.set('auth_token', action.payload.token);
+        SSStorageUtil.set('auth_token', action.payload.accessToken);
+        SSStorageUtil.set('refresh_token', action.payload.refreshToken);
         SSStorageUtil.set('user_info', action.payload.user);
       })
       .addCase(registerAsync.rejected, (state, action) => {
@@ -190,6 +193,7 @@ const authSlice = createSlice({
         // 如果获取用户信息失败，清除认证状态
         state.isAuthenticated = false;
         SSStorageUtil.remove('auth_token');
+        SSStorageUtil.remove('refresh_token');
         SSStorageUtil.remove('user_info');
       });
 
@@ -204,6 +208,7 @@ const authSlice = createSlice({
         state.token = null;
         state.isAuthenticated = false;
         SSStorageUtil.remove('auth_token');
+        SSStorageUtil.remove('refresh_token');
         SSStorageUtil.remove('user_info');
       })
       .addCase(logoutAsync.rejected, (state) => {
@@ -213,6 +218,7 @@ const authSlice = createSlice({
         state.token = null;
         state.isAuthenticated = false;
         SSStorageUtil.remove('auth_token');
+        SSStorageUtil.remove('refresh_token');
         SSStorageUtil.remove('user_info');
       });
   },

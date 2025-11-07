@@ -140,11 +140,11 @@ const homeSlice = createSlice({
       .addCase(fetchFeedsAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.refreshing = false;
-        state.feeds = action.payload.list;
+        state.feeds = action.payload.items;
         state.total = action.payload.total;
         state.page = action.payload.page;
         state.pageSize = action.payload.pageSize;
-        state.hasMore = action.payload.hasMore;
+        state.hasMore = action.payload.hasMore || false;
         state.error = null;
       })
       .addCase(fetchFeedsAsync.rejected, (state, action) => {
@@ -161,10 +161,10 @@ const homeSlice = createSlice({
       })
       .addCase(loadMoreFeedsAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.feeds = [...state.feeds, ...action.payload.list];
+        state.feeds = [...state.feeds, ...action.payload.items];
         state.total = action.payload.total;
         state.page = action.payload.page;
-        state.hasMore = action.payload.hasMore;
+        state.hasMore = action.payload.hasMore || false;
         state.error = null;
       })
       .addCase(loadMoreFeedsAsync.rejected, (state, action) => {
