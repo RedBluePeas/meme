@@ -4,7 +4,7 @@
 
 import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { NextUIProvider } from '@heroui/react';
+import { HeroUIProvider } from '@heroui/react';
 import { Provider } from 'react-redux';
 import { router } from './router';
 import { store } from './store';
@@ -42,9 +42,9 @@ function App() {
 
   return (
     <Provider store={store}>
-      <NextUIProvider>
+      <HeroUIProvider>
         <RouterProvider router={router} />
-      </NextUIProvider>
+      </HeroUIProvider>
     </Provider>
   );
 }
