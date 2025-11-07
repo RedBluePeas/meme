@@ -7,15 +7,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@heroui/react';
 import {
-  Heart,
-  Star,
+  HeartIcon,
+  StarIcon,
   ClockIcon,
-  Settings,
-  Shield,
+  Cog6ToothIcon,
+  ShieldCheckIcon,
   BellIcon,
-  Moon,
-  Info,
-  LogOut,
+  MoonIcon,
+  InformationCircleIcon,
+  ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
 import { MainLayout } from '@/components/Layout';
 import { ProfileHeader, ProfileStats, SettingsList, SettingItem } from './components';
@@ -48,13 +48,13 @@ const ProfilePage: React.FC = () => {
   const accountSettings: SettingItem[] = [
     {
       id: 'favorites',
-      icon: <Heart size={20} />,
+      icon: <HeartIcon className="w-5 h-5" />,
       title: '我的收藏',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },
     {
       id: 'likes',
-      icon: <Star size={20} />,
+      icon: <StarIcon className="w-5 h-5" />,
       title: '我的点赞',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },
@@ -69,13 +69,13 @@ const ProfilePage: React.FC = () => {
   const systemSettings: SettingItem[] = [
     {
       id: 'settings',
-      icon: <Settings size={20} />,
+      icon: <Cog6ToothIcon className="w-5 h-5" />,
       title: '设置',
       onClick: () => navigate('/settings'),
     },
     {
       id: 'security',
-      icon: <Shield size={20} />,
+      icon: <ShieldCheckIcon className="w-5 h-5" />,
       title: '账号与安全',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },
@@ -87,13 +87,13 @@ const ProfilePage: React.FC = () => {
     },
     {
       id: 'theme',
-      icon: <Moon size={20} />,
+      icon: <MoonIcon className="w-5 h-5" />,
       title: '深色模式',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },
     {
       id: 'about',
-      icon: <Info size={20} />,
+      icon: <InformationCircleIcon className="w-5 h-5" />,
       title: '关于我们',
       onClick: () => SSDialog.toast.info('功能开发中'),
     },
@@ -171,7 +171,7 @@ const ProfilePage: React.FC = () => {
             fullWidth
             variant="bordered"
             color="danger"
-            startContent={<LogOut size={18} />}
+            startContent={<ArrowRightOnRectangleIcon className="w-[18px] h-[18px]" />}
             onClick={handleLogout}
           >
             退出登录

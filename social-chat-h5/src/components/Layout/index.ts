@@ -5,4 +5,5 @@
 export { TabBar } from './TabBar';
 export { NavBar } from './NavBar';
 export { MainLayout } from './MainLayout';
-export type { NavBarProps, MainLayoutProps } from './NavBar';
+export type { NavBarProps } from './NavBar';
+export type { MainLayoutProps } from './MainLayout';
