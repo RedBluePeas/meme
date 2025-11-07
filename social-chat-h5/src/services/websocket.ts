@@ -33,7 +33,7 @@ class WebSocketService {
       return;
     }
 
-    const token = SSStorageUtil.getToken();
+    const token = SSStorageUtil.get<string>('auth_token');
     if (!token) {
       console.error('[WebSocket] No token found');
       return;
